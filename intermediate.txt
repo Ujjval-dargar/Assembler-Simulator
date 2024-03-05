@@ -1,0 +1,6 @@
+add r0 r1 r2
+mov r1 0
+sub r3 r5 r1
+beq r1 r1 y
+sub r4 r4 r9
+beq zero zero 0x00000000
