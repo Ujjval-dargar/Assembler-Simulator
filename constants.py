@@ -38,6 +38,7 @@ Register_Address = {
 
 MNEMONICS_DICT = { 
 
+    #R-TYPE MNEMONICS
 	"add": {
         "type": "R",
         "funct3": "000",
@@ -101,6 +102,7 @@ MNEMONICS_DICT = {
         "textSyntax": ["REG", "REG", "REG"]
     },
 
+    #I-TYPE MNEMONICS
     "lw": {
         "type": "I",
         "opcode": "0000011",
@@ -133,6 +135,7 @@ MNEMONICS_DICT = {
         "textSyntax": ["REG", "REG", "IMM"]
     },
 
+    #U-TYPE MNEMONICS
     "auipc": {
         "type": "U",
         "opcode": "0010111",
@@ -155,7 +158,7 @@ MNEMONICS_DICT = {
 
     },
 
-
+    #J-TYPE MNEMONICS
     "jal": {
         "type": "J",
         "opcode": "0010111",
