@@ -16,6 +16,7 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
         # Input: "   <opcode> <operand>, <operand>, ..., <operand>    "
         # Output: "<opcode> <operand>, <operand>, ..., <operand>"
         line = line.strip()
+        line = line.lower()
 
 
         # Check for labels of following two types (input):
