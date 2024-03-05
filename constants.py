@@ -35,3 +35,20 @@ Register_Address = {
     't6': '11111'
 
 }
+
+MNEMONICS_DICT = { 
+	"add" : { 
+		"type" : "R" ,
+		"funct3": 000,
+        "funct7": 0000000
+	}
+}
+
+INSTRUCTION_TYPES_DICT = {
+
+	"R" : {
+		"opCode": 0110011,
+		"operandsNum": 3,
+		"textSyntax": [ "REG", "REG", "REG" ]
+		}
+}
