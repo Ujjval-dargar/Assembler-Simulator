@@ -133,4 +133,39 @@ MNEMONICS_DICT = {
         "textSyntax": ["REG", "REG", "IMM"]
     },
 
+    "auipc": {
+        "type": "U",
+        "opcode": "0010111",
+
+        "funct3": None,
+        "funct7": None,
+
+        "textSyntax": ["REG", "IMM20"]
+
+    },
+
+    "lui": {
+        "type": "U",
+        "opcode": "0110111",
+
+        "funct3": None,
+        "funct7": None,
+
+        "textSyntax": ["REG", "IMM20"]
+
+    },
+
+
+    "jal": {
+        "type": "J",
+        "opcode": "0010111",
+
+        "funct3": None,
+        "funct7": None,
+
+        "textSyntax": ["REG", "IMM20"]
+
+    },
+
+
 }
