@@ -29,7 +29,7 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
             # Check if there is space in between
             possibleLabel = line[ : colonIndex ] # Exclude colon
 
-            if  has_space(possibleLabel):
+            if possibleLabel.count(" ") != 0:
                 raise Exception("Invalid Instruction: Label has space in between")
 
             if possibleLabel in labels_dict:
@@ -41,13 +41,16 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
 
             labels_dict[ possibleLabel ] = program_counter
 
-        if line == "beq zero,zero,0x00000000":
-          halt_found = True
-          break
+        line = line.replace(",", " ")
+        line = " ".join(line.split())
+
 
         intermediate_file.write(line)
         program_counter += 1 # Each instruction is stored at one memory location
 
+        if line == "beq zero zero 0x00000000":
+          halt_found = True
+          break
 
 # Preliminary error handling
 if ( not (halt_found and program_counter < 64) ):
