@@ -37,18 +37,100 @@ Register_Address = {
 }
 
 MNEMONICS_DICT = { 
-	"add" : { 
-		"type" : "R" ,
-		"funct3": 000,
-        "funct7": 0000000
-	}
-}
 
-INSTRUCTION_TYPES_DICT = {
+	"add": {
+        "type": "R",
+        "funct3": "000",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
 
-	"R" : {
-		"opCode": 0110011,
-		"operandsNum": 3,
-		"textSyntax": [ "REG", "REG", "REG" ]
-		}
+    "sub": {
+        "type": "R",
+        "funct3": "000",
+        "funct7": "0100000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "sll": {
+        "type": "R",
+        "funct3": "001",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "slt": {
+        "type": "R",
+        "funct3": "010",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "sltu": {
+        "type": "R",
+        "funct3": "011",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "xor": {
+        "type": "R",
+        "funct3": "100",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "srl": {
+        "type": "R",
+        "funct3": "101",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "or": {
+        "type": "R",
+        "funct3": "110",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "and": {
+        "type": "R",
+        "funct3": "111",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "REG"]
+    },
+
+    "lw": {
+        "type": "I",
+        "opcode": "0000011",
+        "funct3": "010",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
+    },
+
+    "addi": {
+        "type": "I",
+        "opcode": "0010011",
+        "funct3": "000",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
+    },
+
+    "sltiu": {
+        "type": "I",
+        "opcode": "0010011 ",
+        "funct3": "011",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
+    },
+
+    "jalr": {
+        "type": "I",
+        "opcode": "1100111",
+        "funct3": "000",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
+    },
+
 }
