@@ -167,5 +167,62 @@ MNEMONICS_DICT = {
 
     },
 
+    #S-TYPE MNEMONICS
+    "sw" : {
+        "type" : "S",
+        "opcode" : "0100011",
+        "funct3" : None,
+        "funct7" : None,
+        "textSyntax" : ["REG", "REG", "IMM12"]
+    },
+
+    #B-TYPE MNEMONICS
+    "beq" : {
+        "type" : "B" ,
+        "opcode" : "1100011 ",
+        "funct3" : "000" ,
+        "funct7" : None ,
+        "textSyntax" : ["REG","REG","IMM12"]
+    },
+
+    "bne" : {
+        "type" : "B" ,
+        "opcode" : "1100011 ",
+        "funct3" : "001" ,
+        "funct7" : None ,
+        "textSyntax" : ["REG","REG","IMM12"]
+    },
+
+    "blt" : {
+        "type" : "B" ,
+        "opcode" : "1100011 ",
+        "funct3" : "100" ,
+        "funct7" : None ,
+        "textSyntax" : ["REG","REG","IMM12"]
+    },
+
+    "bge" : {
+        "type" : "B" ,
+        "opcode" : "1100011 ",
+        "funct3" : "101" ,
+        "funct7" : None ,
+        "textSyntax" : ["REG","REG","IMM12"]
+    },
+
+    "bltu" : {
+        "type" : "B" ,
+        "opcode" : "1100011 ",
+        "funct3" : "110" ,
+        "funct7" : None ,
+        "textSyntax" : ["REG","REG","IMM12"]
+    },
+
+    "bgeu" : {
+        "type" : "B" ,
+        "opcode" : "1100011 ",
+        "funct3" : "111" ,
+        "funct7" : None ,
+        "textSyntax" : ["REG","REG","IMM12"]
+    }
 
 }
