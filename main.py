@@ -45,7 +45,7 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
         line = " ".join(line.split())
 
 
-        intermediate_file.write(line)
+        intermediate_file.write(line+"\n")
         program_counter += 1 # Each instruction is stored at one memory location
 
         if line == "beq zero zero 0x00000000":
