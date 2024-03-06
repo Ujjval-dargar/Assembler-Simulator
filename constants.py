@@ -153,7 +153,7 @@ MNEMONICS_DICT = {
         "funct3": None,
         "funct7": None,
 
-        "textSyntax": ["REG", "IMM20"]
+        "textSyntax": ["REG", "IMM"]
 
     },
 
@@ -164,7 +164,7 @@ MNEMONICS_DICT = {
         "funct3": None,
         "funct7": None,
 
-        "textSyntax": ["REG", "IMM20"]
+        "textSyntax": ["REG", "IMM"]
 
     },
 
@@ -176,7 +176,7 @@ MNEMONICS_DICT = {
         "funct3": None,
         "funct7": None,
 
-        "textSyntax": ["REG", "IMM20"]
+        "textSyntax": ["REG", "IMM"]
 
     },
 
@@ -186,7 +186,7 @@ MNEMONICS_DICT = {
         "opcode" : "0100011",
         "funct3" : None,
         "funct7" : None,
-        "textSyntax" : ["REG", "REG", "IMM12"]
+        "textSyntax" : ["REG", "REG", "IMM"]
     },
 
     #B-TYPE MNEMONICS
@@ -195,7 +195,7 @@ MNEMONICS_DICT = {
         "opcode" : "1100011 ",
         "funct3" : "000" ,
         "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM12"]
+        "textSyntax" : ["REG","REG","IMM"]
     },
 
     "bne" : {
@@ -203,7 +203,7 @@ MNEMONICS_DICT = {
         "opcode" : "1100011 ",
         "funct3" : "001" ,
         "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM12"]
+        "textSyntax" : ["REG","REG","IMM"]
     },
 
     "blt" : {
@@ -211,7 +211,7 @@ MNEMONICS_DICT = {
         "opcode" : "1100011 ",
         "funct3" : "100" ,
         "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM12"]
+        "textSyntax" : ["REG","REG","IMM"]
     },
 
     "bge" : {
@@ -219,7 +219,7 @@ MNEMONICS_DICT = {
         "opcode" : "1100011 ",
         "funct3" : "101" ,
         "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM12"]
+        "textSyntax" : ["REG","REG","IMM"]
     },
 
     "bltu" : {
@@ -227,7 +227,7 @@ MNEMONICS_DICT = {
         "opcode" : "1100011 ",
         "funct3" : "110" ,
         "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM12"]
+        "textSyntax" : ["REG","REG","IMM"]
     },
 
     "bgeu" : {
@@ -235,7 +235,7 @@ MNEMONICS_DICT = {
         "opcode" : "1100011 ",
         "funct3" : "111" ,
         "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM12"]
+        "textSyntax" : ["REG","REG","IMM"]
     }
 
 }
