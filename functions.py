@@ -33,7 +33,7 @@ def binary(num, n):
         bin_str = list(bin_str)
 
         #calculating  two's complement by flipping all the bits and adding one
-        
+
         for i in range(len(bin_str)):
 
             if (bin_str[i] == '1'):
@@ -51,41 +51,73 @@ def binary(num, n):
     return bin_str
 
 
+
+# function for checking correct input  type
+
+def InputError(operands_lst,mnemonicInfo):
+
+    # checking if number of  operands is equal to no.of required operands
+
+    if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
+        raise Exception("Invalid instruction: Missing operands")
+
+    #checking if input format is correct
+
+    t=operands_lst[1].replace('-','')
+    
+    if (operands_lst[0] not in Register_Address or operands_lst[2] not in Register_Address or t.isnumeric() == False):
+        raise Exception("Invalid operand") 
+    
+
+
+# defining function for evaluating S Type functions
+
 def S_Type( operands_lst, mnemonicInfo):
+
+    # checking for correct input for S_Type  instructions
 
     if operands_lst[-1].count('(')!=1 or operands_lst[-1].count(')')!=1:
         raise Exception("Invalid operand")
     
     flag=False
+
     if ("zero" in operands_lst[-1]):
         flag=True
 
     if (operands_lst[-1][-1]!=')'):
         raise Exception("Invalid operand")
+    
     if flag:
+    
         if (operands_lst[-1][-6]!='('):
-            raise Exception("Invalid operand")
-    else:
-        if (operands_lst[-1][-4]!='('):
+    
             raise Exception("Invalid operand")
     
+    else:
+    
+        if (operands_lst[-1][-4]!='('):
+    
+            raise Exception("Invalid operand")
+    
+    #replacing brackets with spaces and spliting the  string into a list of strings
+        
     operands_lst = " ".join(operands_lst).replace(
         "(", " ").replace(")", " ").split()
 
-    if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
-        raise Exception("Invalid instruction: Missing operands")
 
-    t=operands_lst[1].replace('-','')
-    if (operands_lst[0] not in Register_Address or operands_lst[2] not in Register_Address or t.isnumeric() == False):
-        raise Exception("Invalid operand")
-
+    InputError(operands_lst,mnemonicInfo)
+    
     imm = binary(operands_lst[1], 12)
+
+    #printing the output binary format of the given instruction
 
     bin_line = imm[:7] +" "+ Register_Address[operands_lst[0]] +" "+ \
         Register_Address[operands_lst[2]]+" " + \
         mnemonicInfo["funct3"]+" "+imm[7:]+" "+mnemonicInfo["opcode"]
     
     return bin_line
+
+# defining function for U Type instruction
 
 def U_Type( operands_lst, mnemonicInfo):
 
@@ -112,6 +144,8 @@ def U_Type( operands_lst, mnemonicInfo):
     # We use only upper 20 bits of 32-bit immediate, discarding lower 12 bits
     return bin_imm[32:11:-1] + bin_rd + mnemonicInfo["opcode"]
     
+
+# defining function for J Type instruction
 
 def J_Type(operands_lst, mnemonicInfo):
 
