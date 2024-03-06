@@ -49,7 +49,7 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
 
 
         intermediate_file.write(line+"\n")
-        program_counter += 1 # Each instruction is stored at one memory location
+        program_counter += 4 # Each instruction is stored at 4 memory location
 
         if line == "beq zero zero 0":
           halt_found = True
@@ -62,11 +62,28 @@ if ( not (halt_found and program_counter < 64) ):
 
 # Second pass
 program_counter = 0
-
-with open("intermediate.txt") as intermediate_file, open("output.txt", "w") as output_file:
-
+with open("intermediate.txt") as intermediate_file, open("intermediate2.txt", "w") as intermediate2_file:
+    
     for line in intermediate_file:
-    # Update program counter at end too
+
+        label = ""
+
+        for iter_label in labels_dict:
+            if iter_label in line:
+                jump = labels_dict[iter_label] - program_counter
+                line = line.replace( iter_label, str( jump ) )
+
+        intermediate2_file.write(line)
+        program_counter += 4
+
+
+
+# Third pass
+program_counter = 0
+
+with open("intermediate2.txt") as intermediate_file2, open("output.txt", "w") as output_file:
+
+    for line in intermediate_file2:
 
         # Split only at first space
         # [ "opcode", "<operand> <operand> ..." ]
@@ -84,9 +101,9 @@ with open("intermediate.txt") as intermediate_file, open("output.txt", "w") as o
             raise Exception("Invalid instruction: Unknown mnemonic")
 
         # Get information about instruction
-        # Convert to object
         mnemonicInfo = MNEMONICS_DICT[mnemonic]
 
         instructionType = mnemonicInfo[ "type" ]
 
-        
+        program_counter += 4
+
