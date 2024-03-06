@@ -51,7 +51,7 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
         intermediate_file.write(line+"\n")
         program_counter += 1 # Each instruction is stored at one memory location
 
-        if line == "beq zero zero 0x00000000":
+        if line == "beq zero zero 0":
           halt_found = True
           break
 
