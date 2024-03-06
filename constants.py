@@ -208,7 +208,7 @@ MNEMONICS_DICT = {
 
     "blt" : {
         "type" : "B" ,
-        "opcode" : "1100011 ",
+        "opcode" : "1100011",
         "funct3" : "100" ,
         "funct7" : None ,
         "textSyntax" : ["REG","REG","IMM"]
@@ -216,7 +216,7 @@ MNEMONICS_DICT = {
 
     "bge" : {
         "type" : "B" ,
-        "opcode" : "1100011 ",
+        "opcode" : "1100011",
         "funct3" : "101" ,
         "funct7" : None ,
         "textSyntax" : ["REG","REG","IMM"]
@@ -224,7 +224,7 @@ MNEMONICS_DICT = {
 
     "bltu" : {
         "type" : "B" ,
-        "opcode" : "1100011 ",
+        "opcode" : "1100011",
         "funct3" : "110" ,
         "funct7" : None ,
         "textSyntax" : ["REG","REG","IMM"]
@@ -232,7 +232,7 @@ MNEMONICS_DICT = {
 
     "bgeu" : {
         "type" : "B" ,
-        "opcode" : "1100011 ",
+        "opcode" : "1100011",
         "funct3" : "111" ,
         "funct7" : None ,
         "textSyntax" : ["REG","REG","IMM"]
