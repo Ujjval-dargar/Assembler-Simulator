@@ -127,13 +127,14 @@ def B_Type(operands_lst, mnemonicInfo):
     #Making binary conversion of B-Type instructions
     binline=mnemonicInfo["opcode"]
     
-    imm = binary(operands_lst[2],12)
+    imm = binary(operands_lst[2],12)+" "
 
-    binline=imm[7:]+binline
-    binline=mnemonicInfo["funct3"]+binline
-    binline=Register_Address[operands_lst[0]]+binline
-    binline=Register_Address[operands_lst[1]]+binline
-    binline=imm[:7]+binline
+    binline=" "+imm[7:]+binline
+    binline=" "+mnemonicInfo["funct3"]+binline+" "
+    binline=" "+Register_Address[operands_lst[0]]+binline+" "
+    binline=" "+Register_Address[operands_lst[1]]+binline+" "
+    binline=" "+imm[:7]+binline+" "
+
     return binline
 
 
@@ -166,7 +167,7 @@ def I_Type (operands_lst,mnemonicInfo):
     return bin_line
 
 
-operands_lst=['a4','a5','200']
+operands_lst=['a4','a5','r']
 mnemonicInfo={
         "type" : "B" ,
         "opcode" : "1100011 ",
