@@ -184,7 +184,7 @@ MNEMONICS_DICT = {
     "sw" : {
         "type" : "S",
         "opcode" : "0100011",
-        "funct3" : None,
+        "funct3" : "010",
         "funct7" : None,
         "textSyntax" : ["REG", "REG", "IMM"]
     },
