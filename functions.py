@@ -54,19 +54,14 @@ def binary(num, n):
 
 # function for checking correct input  type
 
-def InputError(operands_lst,mnemonicInfo):
+def InputError_operands(operands_lst,mnemonicInfo):
 
     # checking if number of  operands is equal to no.of required operands
 
     if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
         raise Exception("Invalid instruction: Missing operands")
 
-    #checking if input format is correct
-
-    t=operands_lst[1].replace('-','')
-    
-    if (operands_lst[0] not in Register_Address or operands_lst[2] not in Register_Address or t.isnumeric() == False):
-        raise Exception("Invalid operand") 
+     
     
 
 
@@ -105,7 +100,14 @@ def S_Type( operands_lst, mnemonicInfo):
         "(", " ").replace(")", " ").split()
 
 
-    InputError(operands_lst,mnemonicInfo)
+    InputError_operands(operands_lst,mnemonicInfo)
+
+    #checking if input format is correct
+
+    t=operands_lst[1].replace('-','')
+    
+    if (operands_lst[0] not in Register_Address or operands_lst[2] not in Register_Address or t.isnumeric() == False):
+        raise Exception("Invalid operand")
     
     imm = binary(operands_lst[1], 12)
 
@@ -124,13 +126,17 @@ def U_Type( operands_lst, mnemonicInfo):
     if len(operands_lst) != 2:
         raise Exception("Invalid Instruction: Incorrect operands")
     
+    # checking if register address is valid or not
+
     t=operands_lst[1].replace('-','')
+
     if (operands_lst[0] not in Register_Address) or (t.isnumeric()==False):
         raise Exception("Invalid instruction: wrong operands given")
     
     rd, imm = operands_lst
 
     # Checking for validity
+
     if rd not in Register_Address:
         raise Exception("Invalid operand")
     
@@ -139,9 +145,11 @@ def U_Type( operands_lst, mnemonicInfo):
     # Raises error if incorrect immediate
     # 32-bit immediate with no padding bits 
     # binary() returns MSB at 0-index but we want MSB at 31-index
+
     bin_imm = binary(imm, 32)[::-1]
 
     # We use only upper 20 bits of 32-bit immediate, discarding lower 12 bits
+
     return bin_imm[32:11:-1] + bin_rd + mnemonicInfo["opcode"]
     
 
@@ -152,6 +160,8 @@ def J_Type(operands_lst, mnemonicInfo):
     if len(operands_lst) != 2:
         raise Exception("Invalid Instruction: Incorrect operands")
     
+    # checking if register address is valid or not
+    
     t=operands_lst[1].replace('-','')
     if (operands_lst[0] not in Register_Address) or (t.isnumeric()==False):
         raise Exception("Invalid instruction: wrong operands given")
@@ -159,6 +169,7 @@ def J_Type(operands_lst, mnemonicInfo):
     rd, imm = operands_lst
 
     # Checking for validity
+
     if rd not in Register_Address:
         raise Exception("Invalid operand")
     
@@ -167,21 +178,29 @@ def J_Type(operands_lst, mnemonicInfo):
     # Raises error if incorrect immediate
     # 32-bit immediate +  1 padding bit (sign-extension) = 33 bits
     # binary() returns MSB at 0-index but we want MSB at 31-index
+
     bin_imm = binary(imm, 33)[::-1] 
+
+    #returning output line
 
     return bin_imm[20] + bin_imm[10:0:-1] + bin_imm[11] + bin_imm[19:11:-1] + bin_rd + mnemonicInfo["opcode"]
 
+#function for B Type instruction
+
 def B_Type(operands_lst, mnemonicInfo):
 
-    if len(operands_lst)!=len(mnemonicInfo["textSyntax"]):
-        raise Exception("Invalid instruction: invalid number of operands")
+    InputError_operands(operands_lst,mnemonicInfo)
+
+    # checking for the validity of the register address and immediate value
 
     t=operands_lst[2].replace('-','')
+
     if (operands_lst[0] not in Register_Address) or (operands_lst[1] not in Register_Address) or (t.isnumeric()==False):
         raise Exception("Invalid instruction: wrong operands given")
     
     
     #Making binary conversion of B-Type instructions
+    
     binline=mnemonicInfo["opcode"]
     
     imm = binary(operands_lst[2],12)
