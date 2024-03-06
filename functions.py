@@ -75,6 +75,10 @@ def U_Type( operands_lst, mnemonicInfo):
     if len(operands_lst) != 2:
         raise Exception("Invalid Instruction: Incorrect operands")
     
+    t=operands_lst[1].replace('-','')
+    if (operands_lst[0] not in Register_Address) or (t.isnumeric()==False):
+        raise Exception("Invalid instruction: wrong operands given")
+    
     rd, imm = operands_lst
 
     # Checking for validity
@@ -89,13 +93,17 @@ def U_Type( operands_lst, mnemonicInfo):
     bin_imm = binary(imm, 32)[::-1]
 
     # We use only upper 20 bits of 32-bit immediate, discarding lower 12 bits
-    return bin_imm[32:12:-1] + bin_rd + mnemonicInfo["opcode"]
+    return bin_imm[32:11:-1] + bin_rd + mnemonicInfo["opcode"]
     
 
 def J_Type(operands_lst, mnemonicInfo):
 
     if len(operands_lst) != 2:
         raise Exception("Invalid Instruction: Incorrect operands")
+    
+    t=operands_lst[1].replace('-','')
+    if (operands_lst[0] not in Register_Address) or (t.isnumeric()==False):
+        raise Exception("Invalid instruction: wrong operands given")
     
     rd, imm = operands_lst
 
@@ -110,19 +118,17 @@ def J_Type(operands_lst, mnemonicInfo):
     # binary() returns MSB at 0-index but we want MSB at 31-index
     bin_imm = binary(imm, 33)[::-1] 
 
-    return bin_imm[20] + bin_imm[10:1:-1] + bin_imm[11] + bin_imm[19:12:-1] + bin_rd + mnemonicInfo["opcode"]
+    return bin_imm[20] + bin_imm[10:0:-1] + bin_imm[11] + bin_imm[19:11:-1] + bin_rd + mnemonicInfo["opcode"]
 
 def B_Type(operands_lst, mnemonicInfo):
 
-    #checking for incorrect instructions
-    syntaxfortext=[]
-    for i in operands_lst:
-        if i in Register_Address:
-            syntaxfortext.append("REG")
-        else:
-            syntaxfortext.append("IMM")
-    if (syntaxfortext != mnemonicInfo[ "textSyntax" ]):
-        raise Exception("Invalid instruction: Incorrect operands")
+    if len(operands_lst)!=len(mnemonicInfo["textSyntax"]):
+        raise Exception("Invalid instruction: invalid number of operands")
+
+    t=operands_lst[2].replace('-','')
+    if (operands_lst[0] not in Register_Address) or (operands_lst[1] not in Register_Address) or (t.isnumeric()==False):
+        raise Exception("Invalid instruction: wrong operands given")
+    
     
     #Making binary conversion of B-Type instructions
     binline=mnemonicInfo["opcode"]
@@ -166,14 +172,3 @@ def I_Type (operands_lst,mnemonicInfo):
     bin_line= (imme+Register_Address[operands_lst[1]]+mnemonicInfo["funct3"]+Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
     return bin_line
 
-
-operands_lst=['a4','a5','r']
-mnemonicInfo={
-        "type" : "B" ,
-        "opcode" : "1100011 ",
-        "funct3" : "100" ,
-        "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM"]
-    }
-
-print(B_Type(operands_lst,mnemonicInfo))

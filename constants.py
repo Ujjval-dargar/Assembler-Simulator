@@ -171,7 +171,7 @@ MNEMONICS_DICT = {
     #J-TYPE MNEMONICS
     "jal": {
         "type": "J",
-        "opcode": "0010111",
+        "opcode": "1101111",
 
         "funct3": None,
         "funct7": None,
