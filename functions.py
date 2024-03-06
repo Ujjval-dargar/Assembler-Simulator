@@ -172,3 +172,14 @@ def I_Type (operands_lst,mnemonicInfo):
     bin_line= (imme+Register_Address[operands_lst[1]]+mnemonicInfo["funct3"]+Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
     return bin_line
 
+
+if __name__ == "__main__":
+    operands_lst = [ "a5", "-07" ]
+    mnemonicInfo = {
+        "type": "I",
+        "opcode": "0000011",
+        "funct3": "010",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
+    }
+    print( I_Type(operands_lst, mnemonicInfo) )

@@ -1,4 +1,5 @@
 from constants import *
+from functions import *
 
 labels_dict = {}
 halt_found = False
@@ -104,6 +105,26 @@ with open("intermediate2.txt") as intermediate_file2, open("output.txt", "w") as
         mnemonicInfo = MNEMONICS_DICT[mnemonic]
 
         instructionType = mnemonicInfo[ "type" ]
+       
+        if instructionType == "R":
+            line = R_Type(operands_lst, mnemonicInfo)
 
+        elif instructionType == "I":
+            line = I_Type(operands_lst, mnemonicInfo)
+
+        elif instructionType == "U":
+            line = U_Type(operands_lst, mnemonicInfo)
+
+        elif instructionType == "B":
+            line = B_Type(operands_lst, mnemonicInfo)
+
+        elif instructionType == "J":
+            line = J_Type(operands_lst, mnemonicInfo)
+
+        elif instructionType == "S":
+            line = S_Type(operands_lst, mnemonicInfo)
+
+        
+        output_file.write(line + "\n")
         program_counter += 4
 

@@ -5,3 +5,5 @@ temp.py
 __pycache__/constants.cpython-311.pyc
 intermediate2.txt
 intermediate.txt
+output.txt
+*.pyc
