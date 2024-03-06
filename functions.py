@@ -50,3 +50,45 @@ def S_Type(mnemonic, operands_lst, mnemonicInfo):
         mnemonicInfo["funct3"]+imm[8:]+mnemonicInfo["opcode"]
     
     return bin_line
+
+def U_Type(mnemonic, operands_lst, mnemonicInfo):
+
+    if len(operands_lst) != 2:
+        raise Exception("Invalid Instruction: Incorrect operands")
+    
+    rd, imm = operands_lst
+
+    # Checking for validity
+    if rd not in Register_Address:
+        raise Exception("Invalid operand")
+    
+    bin_rd = Register_Address[rd]
+
+    # Raises error if incorrect immediate
+    # 32-bit immediate with no padding bits 
+    # binary() returns MSB at 0-index but we want MSB at 31-index
+    bin_imm = binary(imm, 32)[::-1]
+
+    # We use only upper 20 bits of 32-bit immediate, discarding lower 12 bits
+    return bin_imm[32:12:-1] + bin_rd + mnemonicInfo["opcode"]
+    
+
+def J_Type(mnemonic, operands_lst, mnemonicInfo):
+
+    if len(operands_lst) != 2:
+        raise Exception("Invalid Instruction: Incorrect operands")
+    
+    rd, imm = operands_lst
+
+    # Checking for validity
+    if rd not in Register_Address:
+        raise Exception("Invalid operand")
+    
+    bin_rd = Register_Address[rd]
+
+    # Raises error if incorrect immediate
+    # 32-bit immediate +  1 padding bit (sign-extension) = 33 bits
+    # binary() returns MSB at 0-index but we want MSB at 31-index
+    bin_imm = binary(imm, 33)[::-1] 
+
+    return bin_imm[20] + bin_imm[10:1:-1] + bin_imm[11] + bin_imm[19:12:-1] + bin_rd + mnemonicInfo["opcode"]
