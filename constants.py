@@ -69,6 +69,7 @@ MNEMONICS_DICT = {
         "funct7": "0000000",
         "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
+        
     },
 
     "sltu": {

@@ -1,3 +1,5 @@
+from constants import *
+
 labels_dict = {}
 halt_found = False
 program_counter = 0
@@ -56,3 +58,41 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
 # Preliminary error handling
 if ( not (halt_found and program_counter < 64) ):
     raise Exception("Virtual Halt missing or not used as last instruction")
+
+
+# Second pass
+program_counter = 0
+
+with open("intermediate.txt") as intermediate_file, open("output.txt", "w") as output_file:
+
+    for line in intermediate_file:
+    # Update program counter at end too
+
+        # Split only at first space
+        # [ "opcode", "<operand> <operand> ..." ]
+        tokens = line.split( maxsplit = 1 )
+
+        if len(tokens) < 2:
+            raise Exception("Invalid instruction: Missing opcode or no space between opcode and operands")
+
+        mnemonic = tokens[0]
+        operands_str = tokens[1]
+
+        operands_lst = operands_str.split()
+
+        if mnemonic not in MNEMONICS_DICT:
+            raise Exception("Invalid instruction: Unknown mnemonic")
+
+        # Get information about instruction
+        # Convert to object
+        mnemonicInfo = MNEMONICS_DICT[mnemonic]
+
+        instructionType = mnemonicInfo[ "type" ]
+
+        textSyntax = mnemonicInfo["textSyntax"]
+        operandsNum = len(textSyntax)
+
+        if len(operands_lst) != operandsNum:
+            raise Exception("Invalid instruction: Missing operands")
+
+        
