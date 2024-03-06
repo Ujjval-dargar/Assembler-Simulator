@@ -159,8 +159,27 @@ def R_Type(operands_lst,mnemonicInfo):
     return bin_line 
 
 
-def I_Type (operands_lst,mnemonicInfo):
+def I_Type (mnemonic,operands_lst,mnemonicInfo):
+    if mnemonic=='lw':
+        if operands_lst[-1].count('(')!=1 or operands_lst[-1].count(')')!=1:
+            raise Exception("Invalid operand")
+    
+        flag=False
+        if ("zero" in operands_lst[-1]):
+            flag=True
 
+        if (operands_lst[-1][-1]!=')'):
+            raise Exception("Invalid operand")
+        if flag:
+            if (operands_lst[-1][-6]!='('):
+                raise Exception("Invalid operand")
+        else:
+            if (operands_lst[-1][-4]!='('):
+                raise Exception("Invalid operand")
+        
+        operands_lst = " ".join(operands_lst).replace(
+            "(", " ").replace(")", " ").split()
+    
     if len(operands_lst)!=len(mnemonicInfo["textSyntax"]):
         raise Exception("Invalid instruction: invalid number of operands")
     
@@ -173,13 +192,12 @@ def I_Type (operands_lst,mnemonicInfo):
     return bin_line
 
 
-if __name__ == "__main__":
-    operands_lst = [ "a5", "-07" ]
-    mnemonicInfo = {
-        "type": "I",
-        "opcode": "0000011",
-        "funct3": "010",
-        "funct7": None,
-        "textSyntax": ["REG", "REG", "IMM"]
-    }
-    print( I_Type(operands_lst, mnemonicInfo) )
+# if __name__ == "__main__":
+#     operands_lst = [ "a5", "-07" ]
+#     mnemonicInfo = {
+#         "type": "I",
+#         "opcode": "0000011",
+#         "funct3": "010",
+#         "funct7": None,
+#         "textSyntax": ["REG", "REG", "IMM"]
+#     }

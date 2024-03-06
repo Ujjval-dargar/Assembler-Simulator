@@ -110,7 +110,7 @@ with open("intermediate2.txt") as intermediate_file2, open("output.txt", "w") as
             line = R_Type(operands_lst, mnemonicInfo)
 
         elif instructionType == "I":
-            line = I_Type(operands_lst, mnemonicInfo)
+            line = I_Type(mnemonic,operands_lst, mnemonicInfo)
 
         elif instructionType == "U":
             line = U_Type(operands_lst, mnemonicInfo)
