@@ -48,4 +48,5 @@ def S_Type(mnemonic, operands_lst, mnemonicInfo):
     bin_line = imm[:8] + Register_Address[operands_lst[0]] + \
         Register_Address[operands_lst[2]] + \
         mnemonicInfo["funct3"]+imm[8:]+mnemonicInfo["opcode"]
+    
     return bin_line
