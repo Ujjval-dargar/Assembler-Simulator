@@ -200,7 +200,7 @@ def B_Type(operands_lst, mnemonicInfo):
     
     
     #Making binary conversion of B-Type instructions
-    
+
     binline=mnemonicInfo["opcode"]
     
     imm = binary(operands_lst[2],12)
@@ -213,45 +213,57 @@ def B_Type(operands_lst, mnemonicInfo):
 
     return binline
 
+# function defination for R Type instruction
 
 def R_Type(operands_lst,mnemonicInfo):
 
-    if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
-        raise  Exception("Invalid instruction: Invalid number of operands")
+    InputError_operands(operands_lst,mnemonicInfo)
     
     for i in operands_lst:
 
         if (i not in Register_Address):
             raise Exception ("Invalid instruction: invalid register name given")
     
-    
+    # returning output line 
+        
     bin_line = (mnemonicInfo["funct7"] + Register_Address[operands_lst[2]] + Register_Address[operands_lst[1]]+mnemonicInfo["funct3"]+ Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
     return bin_line 
 
+# function defination for I Type instruction
 
 def I_Type (mnemonic,operands_lst,mnemonicInfo):
+
+    #explicitly defining the lw instruction 
+
     if mnemonic=='lw':
+
+        #checking for correct input type
+
         if operands_lst[-1].count('(')!=1 or operands_lst[-1].count(')')!=1:
             raise Exception("Invalid operand")
     
         flag=False
+
         if ("zero" in operands_lst[-1]):
             flag=True
 
         if (operands_lst[-1][-1]!=')'):
             raise Exception("Invalid operand")
+        
         if flag:
+
             if (operands_lst[-1][-6]!='('):
                 raise Exception("Invalid operand")
+        
         else:
+
             if (operands_lst[-1][-4]!='('):
                 raise Exception("Invalid operand")
         
         operands_lst = " ".join(operands_lst).replace(
             "(", " ").replace(")", " ").split()
     
-    if len(operands_lst)!=len(mnemonicInfo["textSyntax"]):
-        raise Exception("Invalid instruction: invalid number of operands")
+    InputError_operands(operands_lst,mnemonicInfo)
     
     if mnemonic=='lw':
         t=operands_lst[1].replace('-','')
@@ -274,3 +286,6 @@ def I_Type (mnemonic,operands_lst,mnemonicInfo):
         bin_line= (imme+Register_Address[operands_lst[1]]+mnemonicInfo["funct3"]+Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
     
     return bin_line
+
+
+
