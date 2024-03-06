@@ -133,7 +133,7 @@ def B_Type(operands_lst, mnemonicInfo):
     binline=mnemonicInfo["funct3"]+binline
     binline=Register_Address[operands_lst[0]]+binline
     binline=Register_Address[operands_lst[1]]+binline
-
+    binline=imm[:7]+binline
     return binline
 
 
