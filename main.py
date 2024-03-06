@@ -89,10 +89,4 @@ with open("intermediate.txt") as intermediate_file, open("output.txt", "w") as o
 
         instructionType = mnemonicInfo[ "type" ]
 
-        textSyntax = mnemonicInfo["textSyntax"]
-        operandsNum = len(textSyntax)
-
-        if len(operands_lst) != operandsNum:
-            raise Exception("Invalid instruction: Missing operands")
-
         
