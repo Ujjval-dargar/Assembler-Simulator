@@ -94,6 +94,8 @@ def J_Type(mnemonic, operands_lst, mnemonicInfo):
     return bin_imm[20] + bin_imm[10:1:-1] + bin_imm[11] + bin_imm[19:12:-1] + bin_rd + mnemonicInfo["opcode"]
 
 def B_TYPE(mnemonic, operands_lst, mnemonicInfo):
+
+    #checking for incorrect instructions
     syntaxfortext=[]
     for i in operands_lst:
         if i in Register_Address:
@@ -103,6 +105,7 @@ def B_TYPE(mnemonic, operands_lst, mnemonicInfo):
     if (syntaxfortext != mnemonicInfo[ "textSyntax" ]):
         raise Exception("Invalid instruction: Incorrect operands")
     
+    #Making binary conversion of B-Type instructions
     binline=mnemonicInfo["opcode"]
     
     imm = bin(operands_lst[2],12)
