@@ -43,6 +43,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "000",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -50,6 +51,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "000",
         "funct7": "0100000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -57,6 +59,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "001",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -64,6 +67,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "010",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -71,6 +75,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "011",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -78,6 +83,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "100",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -85,6 +91,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "101",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -92,6 +99,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "110",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -99,6 +107,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "111",
         "funct7": "0000000",
+        "opcode":"0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
