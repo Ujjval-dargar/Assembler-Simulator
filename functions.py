@@ -113,3 +113,27 @@ def B_TYPE(mnemonic, operands_lst, mnemonicInfo):
     binline=Register_Address[operands_lst[1]]+binline
 
     return binline
+
+
+def R_Type(mnemonic,operands_lst,mnemonicInfo):
+    #operands_lst=operands_lst.split(",")
+    if len(operands_lst)!= len(mnemonicInfo["testSyntax"]):
+        raise  Exception("Invalid instruction: Invalid number of operands")
+    for i in operands_lst:
+        if (i not in Register_Address):
+            raise Exception ("Invalid instruction: invalid register name given")
+    
+    
+    bin_line= (mnemonicInfo["funct7"]+" "+Register_Address[operands_lst[2]]+" "+Register_Address[operands_lst[1]]+" "+mnemonicInfo["funt3"]+" "+ Register_Address[operands_lst[0]]+" "+mnemonicInfo["opcode"])
+    return bin_line 
+
+def I_Type (operands_lst,mnemonicInfo):
+    if len(operands_lst)!=len(mnemonicInfo["testSyntax"]):
+        raise Exception("Invalid instruction: invalid number of operands")
+    if (operands_lst[0] not in Register_Address) or (operands_lst[1] not in Register_Address) or (operands_lst[2] is not int):
+        raise Exception("Invalid instruction: wrong operands given")
+    imme=binary(operands_lst[2],12)
+    bin_line= (imme+" "+Register_Address[operands_lst[1]]+" "+mnemonicInfo("funct3")+Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
+    return bin_line
+
+
