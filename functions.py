@@ -1,22 +1,39 @@
 from constants import *
 
+# creating a function for calculating 2's complement of a number
+
 def binary(num, n):
 
-    bin_str = str(bin(abs(int(num))))[2:]  # 0b111
-    l = len(bin_str)
+    # converting a string number into its binary number
 
-    if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):
-        raise Exception("Invalid")
+    bin_str = str(bin(abs(int(num))))[2:] 
+
+    # finding the length of the binary number
+
+    l = len(bin_str)  
+
+    #raising error if the binary representation of number is more than n bits long
+
+    if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):            
+        raise Exception("Invalid ")
+
+    # appending leading zeros to the start of the string
 
     if (int(num) >= 0):
         bin_str = "0" * (n-l) + bin_str
 
+    #for negative numbers
+        
     else:
 
         bin_str = "0" * (n-l) + bin_str
 
+        #converting binary string into list 
+
         bin_str = list(bin_str)
 
+        #calculating  two's complement by flipping all the bits and adding one
+        
         for i in range(len(bin_str)):
 
             if (bin_str[i] == '1'):
