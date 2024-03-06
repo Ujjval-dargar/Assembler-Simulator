@@ -1,6 +1,6 @@
-add r0 r1 r2
-mov r1 0
-sub r3 r5 r1
-beq r1 r1 y
-sub r4 r4 r9
-beq zero zero 0x00000000
+add s1 s2 s3
+jalr ra a5 -07
+lw a5 20(s1)
+sub s2 s3 s2
+blt a4 a5 x
+beq zero zero 0

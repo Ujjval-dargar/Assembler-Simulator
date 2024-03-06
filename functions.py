@@ -133,13 +133,13 @@ def B_Type(operands_lst, mnemonicInfo):
     #Making binary conversion of B-Type instructions
     binline=mnemonicInfo["opcode"]
     
-    imm = binary(operands_lst[2],12)+" "
+    imm = binary(operands_lst[2],12)
 
-    binline=" "+imm[7:]+binline
-    binline=" "+mnemonicInfo["funct3"]+binline+" "
-    binline=" "+Register_Address[operands_lst[0]]+binline+" "
-    binline=" "+Register_Address[operands_lst[1]]+binline+" "
-    binline=" "+imm[:7]+binline+" "
+    binline=imm[7:]+binline
+    binline=mnemonicInfo["funct3"]+binline
+    binline=Register_Address[operands_lst[0]]+binline
+    binline=Register_Address[operands_lst[1]]+binline
+    binline=imm[:7]+binline
 
     return binline
 
@@ -183,21 +183,24 @@ def I_Type (mnemonic,operands_lst,mnemonicInfo):
     if len(operands_lst)!=len(mnemonicInfo["textSyntax"]):
         raise Exception("Invalid instruction: invalid number of operands")
     
-    t=operands_lst[2].replace('-','')
-    if (operands_lst[0] not in Register_Address) or (operands_lst[1] not in Register_Address) or (t.isnumeric()==False):
-        raise Exception("Invalid instruction: wrong operands given")
+    if mnemonic=='lw':
+        t=operands_lst[1].replace('-','')
+
+        if (operands_lst[0] not in Register_Address) or (operands_lst[2] not in Register_Address) or (t.isnumeric()==False):
+            raise Exception("Invalid instruction: wrong operands given")
+        
+        imme=binary(operands_lst[1],12)
+
+        bin_line= (imme+Register_Address[operands_lst[2]]+mnemonicInfo["funct3"]+Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
+
+    else:
+        t=operands_lst[2].replace('-','')
+
+        if (operands_lst[0] not in Register_Address) or (operands_lst[1] not in Register_Address) or (t.isnumeric()==False):
+            raise Exception("Invalid instruction: wrong operands given")
     
-    imme=binary(operands_lst[2],12)
-    bin_line= (imme+Register_Address[operands_lst[1]]+mnemonicInfo["funct3"]+Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
+        imme=binary(operands_lst[2],12)
+
+        bin_line= (imme+Register_Address[operands_lst[1]]+mnemonicInfo["funct3"]+Register_Address[operands_lst[0]]+mnemonicInfo["opcode"])
+    
     return bin_line
-
-
-# if __name__ == "__main__":
-#     operands_lst = [ "a5", "-07" ]
-#     mnemonicInfo = {
-#         "type": "I",
-#         "opcode": "0000011",
-#         "funct3": "010",
-#         "funct7": None,
-#         "textSyntax": ["REG", "REG", "IMM"]
-#     }
