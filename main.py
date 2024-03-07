@@ -145,6 +145,13 @@ try:
     second_pass()
     third_pass()
 
+    # Removing error file
+    try:
+        os.remove("errors.txt")
+    except:
+        pass
+
+
 except AssemblerException as err:
     line_num = program_counter//4 + 1
     msg = str(err)
