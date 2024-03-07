@@ -8,7 +8,7 @@ program_counter = -4
 line_num=0
 
 def first_pass():
-    global program_counter,line_num
+    global program_counter,line_num,halt_found
 
     with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as intermediate_file:
 
