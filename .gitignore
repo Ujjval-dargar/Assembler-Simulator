@@ -9,3 +9,6 @@ output.txt
 *.pyc
 intermediate.txt
 errors.txt
+intermediate.txt
+*.txt
+intermediate.txt
