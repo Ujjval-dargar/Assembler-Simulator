@@ -1,8 +1,20 @@
+main: addi     sp, sp, -16
+        sw      s1,4(sp)
+        sw      s0,8(sp)
+        sw      ra,12(sp)
 
 
-add s1, s2, s3
-jalr ra, a5, -07
-lw a5, 20(s1)
-x: sub s2 s3 s2
-blt a4, a5, x
+        
+loop: addi	s0,s0, -1
+        
+
+
+        lw      ra,12(sp)
+        lw      s0,8(sp)
+        lw      s1,4(sp)
+        addi     sp,sp,16
+        
+	
+        
+        
 beq zero, zero, 0

@@ -1,39 +1,35 @@
 from constants import *
 
 # creating a function for calculating 2's complement of a number
-
 def binary(num, n):
 
     # converting a string number into its binary number
-
     bin_str = str(bin(abs(int(num))))[2:] 
 
-    # finding the length of the binary number
 
+    # finding the length of the binary number
     l = len(bin_str)  
 
-    #raising error if the binary representation of number is more than n bits long
 
+    #raising error if the binary representation of number is more than n bits long
     if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):            
-        raise Exception("Invalid ")
+        raise Exception("Invalid Immediate")
+
 
     # appending leading zeros to the start of the string
-
     if (int(num) >= 0):
         bin_str = "0" * (n-l) + bin_str
 
+
     #for negative numbers
-        
     else:
 
         bin_str = "0" * (n-l) + bin_str
 
         #converting binary string into list 
-
         bin_str = list(bin_str)
 
         #calculating  two's complement by flipping all the bits and adding one
-
         for i in range(len(bin_str)):
 
             if (bin_str[i] == '1'):
@@ -43,9 +39,7 @@ def binary(num, n):
                 bin_str[i] = '1'
 
         bin_str = ''.join(bin_str)
-
         bin_str = int(bin_str, 2) + int("1", 2)
-
         bin_str = str(bin(bin_str))[2:]
 
     return bin_str
@@ -56,7 +50,7 @@ def binary(num, n):
 
 def InputError_operands(operands_lst,mnemonicInfo):
 
-    # checking if number of  operands is equal to no.of required operands
+    # checking if number of  operands is equal to no. of required operands
 
     if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
         raise Exception("Invalid instruction: Missing operands")

@@ -53,11 +53,11 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
         program_counter += 4 # Each instruction is stored at 4 memory location
 
         if line == "beq zero zero 0":
-          halt_found = True
-          break
+            halt_found = True
+            break
 
 # Preliminary error handling
-if ( not (halt_found and program_counter < 64) ):
+if ( not (halt_found and program_counter < 64 * 4) ):
     raise Exception("Virtual Halt missing or not used as last instruction")
 
 
