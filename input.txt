@@ -10,7 +10,7 @@ loop: addi	s0,s0, -1
 
 
         lw      ra,12(sp)
-        lw      s0,8(sp)
+        lw      s0,8( sp)
         lw      s1,4(sp)
         addi     sp,sp,16
         

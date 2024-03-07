@@ -59,8 +59,6 @@ def InputError_operands(operands_lst,mnemonicInfo):
     if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
         raise AssemblerException("Invalid Instruction: Missing operands")
 
-     
-    
 
 
 # defining function for evaluating S Type functions
@@ -72,6 +70,8 @@ def S_Type( operands_lst, mnemonicInfo):
     if operands_lst[-1].count('(')!=1 or operands_lst[-1].count(')')!=1:
         raise AssemblerException("Invalid operand")
     
+    operands_lst[-1]=operands_lst[-1].replace(" ","")
+
     flag=False
 
     if ("zero" in operands_lst[-1]):
@@ -240,6 +240,7 @@ def I_Type (mnemonic,operands_lst,mnemonicInfo):
         if operands_lst[-1].count('(')!=1 or operands_lst[-1].count(')')!=1:
             raise AssemblerException("Invalid operand")
     
+        operands_lst[-1]=operands_lst[-1].replace(" ","")
         flag=False
 
         if ("zero" in operands_lst[-1]):
