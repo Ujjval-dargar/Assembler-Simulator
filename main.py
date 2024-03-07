@@ -1,3 +1,4 @@
+import os
 from constants import *
 from functions import *
 
@@ -150,3 +151,10 @@ except AssemblerException as err:
     with open("errors.txt", "w") as error_file:
         error_file.write( line )
 
+try:
+        
+    os.remove("intermediate.txt")
+    os.remove("intermediate2.txt")
+
+except :
+    pass    
