@@ -3,6 +3,7 @@ from constants import *
 class AssemblerException(Exception):
     pass
 
+
 # creating a function for calculating 2's complement of a number
 def binary(num, n):
 
@@ -56,7 +57,7 @@ def InputError_operands(operands_lst,mnemonicInfo):
     # checking if number of  operands is equal to no. of required operands
 
     if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
-        raise AssemblerException("Invalid instruction: Missing operands")
+        raise AssemblerException("Invalid Instruction: Missing operands")
 
      
     
