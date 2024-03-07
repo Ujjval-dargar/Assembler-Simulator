@@ -111,9 +111,9 @@ def S_Type( operands_lst, mnemonicInfo):
 
     #printing the output binary format of the given instruction
 
-    bin_line = imm[:7] +" "+ Register_Address[operands_lst[0]] +" "+ \
-        Register_Address[operands_lst[2]]+" " + \
-        mnemonicInfo["funct3"]+" "+imm[7:]+" "+mnemonicInfo["opcode"]
+    bin_line = imm[:7] + Register_Address[operands_lst[0]] + \
+        Register_Address[operands_lst[2]]+ \
+        mnemonicInfo["funct3"]+imm[7:]+mnemonicInfo["opcode"]
     
     return bin_line
 
