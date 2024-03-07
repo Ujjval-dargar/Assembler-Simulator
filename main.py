@@ -5,6 +5,7 @@ labels_dict = {}
 halt_found = False
 program_counter = 0
 
+
 with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as intermediate_file:
 
       for line in input_file:
@@ -34,10 +35,10 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
             possibleLabel = line[ : colonIndex ] # Exclude colon
 
             if possibleLabel.count(" ") != 0:
-                raise Exception("Invalid Instruction: Label has space in between")
+                raise AssemblerException("Invalid Instruction: Label has space in between")
 
             if possibleLabel in labels_dict:
-                raise Exception("Invalid instruction: Multiple labels defined")
+                raise AssemblerException("Invalid instruction: Multiple labels defined")
 
             # Output: "<opcode> <operand>, <operand>, ..."
             line = line[colonIndex + 1: ] # Discard label and colon
@@ -58,7 +59,7 @@ with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as inte
 
 # Preliminary error handling
 if ( not (halt_found and program_counter < 64 * 4) ):
-    raise Exception("Virtual Halt missing or not used as last instruction")
+    raise AssemblerException("Virtual Halt missing or not used as last instruction")
 
 
 # Second pass
@@ -91,7 +92,7 @@ with open("intermediate2.txt") as intermediate_file2, open("output.txt", "w") as
         tokens = line.split( maxsplit = 1 )
 
         if len(tokens) < 2:
-            raise Exception("Invalid instruction: Missing opcode or no space between opcode and operands")
+            raise AssemblerException("Invalid instruction: Missing opcode or no space between opcode and operands")
 
         mnemonic = tokens[0]
         operands_str = tokens[1]
@@ -99,7 +100,7 @@ with open("intermediate2.txt") as intermediate_file2, open("output.txt", "w") as
         operands_lst = operands_str.split()
 
         if mnemonic not in MNEMONICS_DICT:
-            raise Exception("Invalid instruction: Unknown mnemonic")
+            raise AssemblerException("Invalid instruction: Unknown mnemonic")
 
         # Get information about instruction
         mnemonicInfo = MNEMONICS_DICT[mnemonic]
