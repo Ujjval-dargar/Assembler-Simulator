@@ -192,7 +192,7 @@ MNEMONICS_DICT = {
     #B-TYPE MNEMONICS
     "beq" : {
         "type" : "B" ,
-        "opcode" : "1100011 ",
+        "opcode" : "1100011",
         "funct3" : "000" ,
         "funct7" : None ,
         "textSyntax" : ["REG","REG","IMM"]
@@ -200,7 +200,7 @@ MNEMONICS_DICT = {
 
     "bne" : {
         "type" : "B" ,
-        "opcode" : "1100011 ",
+        "opcode" : "1100011",
         "funct3" : "001" ,
         "funct7" : None ,
         "textSyntax" : ["REG","REG","IMM"]
