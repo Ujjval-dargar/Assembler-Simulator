@@ -157,6 +157,12 @@ except AssemblerException as err:
     with open("errors.txt", "w") as error_file:
         error_file.write( line )
 
+    # Removing binary file
+    try:
+        os.remove("output.txt")
+    except:
+        pass
+
 try:
         
     os.remove("intermediate.txt")
