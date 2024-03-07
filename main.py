@@ -4,20 +4,19 @@ from functions import *
 
 labels_dict = {}
 halt_found = False
-program_counter = 0
+program_counter = -4
+line_num=0
 
 def first_pass():
-    global program_counter
+    global program_counter,line_num
 
     with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as intermediate_file:
 
         for line in input_file:
-
+            line_num+=1
             # Blank line
-            if line.isspace():
-                continue
-
-            # ~ Not blank ~
+            if not line.isspace():
+                program_counter+=4 # Each instruction is stored at 4 memory location
 
             # Removing leading and trailing whitespace
             # Input: "   <opcode> <operand>, <operand>, ..., <operand>    "
@@ -54,7 +53,6 @@ def first_pass():
 
 
             intermediate_file.write(line+"\n")
-            program_counter += 4 # Each instruction is stored at 4 memory location
 
             if line == "beq zero zero 0":
                 halt_found = True
@@ -66,14 +64,17 @@ def first_pass():
 
 
 def second_pass():
-    global program_counter
-    program_counter = 0
+    global program_counter,line_num
+    line_num=0
+    program_counter = -4
 
     with open("intermediate.txt") as intermediate_file, open("intermediate2.txt", "w") as intermediate2_file:
         
         for line in intermediate_file:
+            line_num+=1
 
-            label = ""
+            if not line.isspace():
+                program_counter+=4 # Each instruction is stored at 4 memory location
 
             for iter_label in labels_dict:
                 if iter_label in line:
@@ -81,63 +82,66 @@ def second_pass():
                     line = line.replace( iter_label, str( jump ) )
 
             intermediate2_file.write(line)
-            program_counter += 4
 
 
 
 def third_pass():
-    global program_counter
-    program_counter = 0
+    global program_counter,line_num
+    program_counter = -4
+    line_num=0
 
     with open("intermediate2.txt") as intermediate_file2, open("output.txt", "w") as output_file:
 
         for line in intermediate_file2:
+            line_num+=1
 
-            # Split only at first space
-            # [ "opcode", "<operand> <operand> ..." ]
-            tokens = line.split( maxsplit = 1 )
+            if not line.isspace():
+                program_counter+=4 # Each instruction is stored at 4 memory location
 
-            if len(tokens) < 2:
-                raise AssemblerException("Invalid instruction: Missing opcode or no space between opcode and operands")
+                # Split only at first space
+                # [ "opcode", "<operand> <operand> ..." ]
+                tokens = line.split( maxsplit = 1 )
 
-            mnemonic = tokens[0]
-            operands_str = tokens[1]
+                if len(tokens) < 2:
+                    raise AssemblerException("Invalid instruction: Missing opcode or no space between opcode and operands")
 
-            if '(' in operands_str:
-                operands_lst=operands_str.split(maxsplit=1)
-                operands_lst[-1]=operands_lst[-1].strip()
-            else:
-                operands_lst = operands_str.split()
+                mnemonic = tokens[0]
+                operands_str = tokens[1]
 
-            if mnemonic not in MNEMONICS_DICT:
-                raise AssemblerException("Invalid instruction: Unknown mnemonic")
+                if '(' in operands_str:
+                    operands_lst=operands_str.split(maxsplit=1)
+                    operands_lst[-1]=operands_lst[-1].strip()
+                else:
+                    operands_lst = operands_str.split()
 
-            # Get information about instruction
-            mnemonicInfo = MNEMONICS_DICT[mnemonic]
+                if mnemonic not in MNEMONICS_DICT:
+                    raise AssemblerException("Invalid instruction: Unknown mnemonic")
 
-            instructionType = mnemonicInfo[ "type" ]
-        
-            if instructionType == "R":
-                line = R_Type(operands_lst, mnemonicInfo)
+                # Get information about instruction
+                mnemonicInfo = MNEMONICS_DICT[mnemonic]
 
-            elif instructionType == "I":
-                line = I_Type(mnemonic,operands_lst, mnemonicInfo)
-
-            elif instructionType == "U":
-                line = U_Type(operands_lst, mnemonicInfo)
-
-            elif instructionType == "B":
-                line = B_Type(operands_lst, mnemonicInfo)
-
-            elif instructionType == "J":
-                line = J_Type(operands_lst, mnemonicInfo)
-
-            elif instructionType == "S":
-                line = S_Type(operands_lst, mnemonicInfo)
-
+                instructionType = mnemonicInfo[ "type" ]
             
-            output_file.write(line + "\n")
-            program_counter += 4
+                if instructionType == "R":
+                    line = R_Type(operands_lst, mnemonicInfo)
+
+                elif instructionType == "I":
+                    line = I_Type(mnemonic,operands_lst, mnemonicInfo)
+
+                elif instructionType == "U":
+                    line = U_Type(operands_lst, mnemonicInfo)
+
+                elif instructionType == "B":
+                    line = B_Type(operands_lst, mnemonicInfo)
+
+                elif instructionType == "J":
+                    line = J_Type(operands_lst, mnemonicInfo)
+
+                elif instructionType == "S":
+                    line = S_Type(operands_lst, mnemonicInfo)
+
+                
+                output_file.write(line + "\n")
 
 # __main__
 try:
@@ -153,7 +157,7 @@ try:
 
 
 except AssemblerException as err:
-    line_num = program_counter//4 + 1
+    
     msg = str(err)
 
     line =  f"Line number {line_num}: {msg}"
