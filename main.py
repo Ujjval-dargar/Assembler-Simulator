@@ -103,6 +103,12 @@ def third_pass():
             mnemonic = tokens[0]
             operands_str = tokens[1]
 
+            if '(' in operands_str:
+                operands_lst=operands_str.split(maxsplit=1)
+                operands_lst[-1]=operands_lst[-1].strip()
+            else:
+                operands_lst = operands_str.split()
+
             operands_lst = operands_str.split()
 
             if mnemonic not in MNEMONICS_DICT:
