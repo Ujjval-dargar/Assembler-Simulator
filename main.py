@@ -109,8 +109,6 @@ def third_pass():
             else:
                 operands_lst = operands_str.split()
 
-            operands_lst = operands_str.split()
-
             if mnemonic not in MNEMONICS_DICT:
                 raise AssemblerException("Invalid instruction: Unknown mnemonic")
 
