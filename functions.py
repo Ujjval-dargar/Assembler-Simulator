@@ -201,13 +201,13 @@ def B_Type(operands_lst, mnemonicInfo):
 
     binline=mnemonicInfo["opcode"]
     
-    imm = binary(operands_lst[2],12)
+    imm = binary(operands_lst[2],13)
 
-    binline=imm[7:]+binline
+    binline= imm[8:11+1] + imm[1] +binline
     binline=mnemonicInfo["funct3"]+binline
     binline=Register_Address[operands_lst[0]]+binline
     binline=Register_Address[operands_lst[1]]+binline
-    binline=imm[:7]+binline
+    binline=imm[0] + imm[2:7 + 1] +binline
 
     return binline
 
