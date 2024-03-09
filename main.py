@@ -153,7 +153,6 @@ try:
     f=open("output.txt")
     txt=f.readlines();
     f.close()
-    print(txt)
 
     f=open("output.txt",'w')
     f.writelines(txt[:-1])
