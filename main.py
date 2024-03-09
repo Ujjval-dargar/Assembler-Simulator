@@ -54,9 +54,11 @@ def first_pass():
 
             intermediate_file.write(line+"\n")
 
+            halt_found = False
+            
             if line == "beq zero zero 0":
                 halt_found = True
-                break
+                
 
     # Preliminary error handling
     if ( not (halt_found and program_counter < 64 * 4) ):
