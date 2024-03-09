@@ -200,7 +200,6 @@ def B_Type(operands_lst, mnemonicInfo):
     #Making binary conversion of B-Type instructions
 
     binline=mnemonicInfo["opcode"]
-    
     imm = binary(operands_lst[2],13)
 
     binline= imm[8:11+1] + imm[1] +binline

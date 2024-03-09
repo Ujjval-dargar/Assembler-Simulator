@@ -78,7 +78,7 @@ def second_pass():
 
             for iter_label in labels_dict:
                 if iter_label in line:
-                    jump = labels_dict[iter_label] - program_counter
+                    jump =  program_counter-labels_dict[iter_label]
                     line = line.replace( iter_label, str( jump ) )
 
             intermediate2_file.write(line)
