@@ -1,16 +1,20 @@
 import os
 from constants import *
 from functions import *
+import sys
 
 labels_dict = {}
 halt_found = False
 program_counter = -4
 line_num=0
 
-def first_pass():
-    global program_counter,line_num,halt_found
+input = sys.argv[-2]
+output = sys.argv[-1]
 
-    with open("input.txt", "r") as input_file, open("intermediate.txt", "w") as intermediate_file:
+def first_pass():
+    global program_counter,line_num,halt_found,input,output
+
+    with open(input, "r") as input_file, open("intermediate.txt", "w") as intermediate_file:
 
         for line in input_file:
             line_num+=1
@@ -66,7 +70,7 @@ def first_pass():
 
 
 def second_pass():
-    global program_counter,line_num
+    global program_counter,line_num,input,output
     line_num=0
     program_counter = -4
 
@@ -88,11 +92,11 @@ def second_pass():
 
 
 def third_pass():
-    global program_counter,line_num
+    global program_counter,line_num,input,output
     program_counter = -4
     line_num=0
 
-    with open("intermediate2.txt") as intermediate_file2, open("output.txt", "w") as output_file:
+    with open("intermediate2.txt") as intermediate_file2, open(output, "w") as output_file:
 
         for line in intermediate_file2:
             line_num+=1
@@ -152,11 +156,11 @@ try:
     third_pass()
 
     # To fix the extra blank line at end of output file
-    f=open("output.txt")
+    f=open(output)
     txt=f.readlines();
     f.close()
 
-    f=open("output.txt",'w')
+    f=open(output,'w')
     f.writelines(txt[:-1])
     f.write(txt[-1].strip())
     f.close()
@@ -180,7 +184,7 @@ except AssemblerException as err:
 
     # Removing binary file
     try:
-        os.remove("output.txt")
+        os.remove(output)
     except:
         pass
 
