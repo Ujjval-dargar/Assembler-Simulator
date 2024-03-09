@@ -149,6 +149,17 @@ try:
     second_pass()
     third_pass()
 
+    # To fix the extra blank line at end of output file
+    f=open("output.txt")
+    txt=f.readlines();
+    f.close()
+    print(txt)
+
+    f=open("output.txt",'w')
+    f.writelines(txt[:-1])
+    f.write(txt[-1].strip())
+    f.close()
+
     # Removing error file
     try:
         os.remove("errors.txt")
