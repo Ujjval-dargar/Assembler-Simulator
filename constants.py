@@ -131,7 +131,7 @@ MNEMONICS_DICT = {
 
     "sltiu": {
         "type": "I",
-        "opcode": "0010011 ",
+        "opcode": "0010011",
         "funct3": "011",
         "funct7": None,
         "textSyntax": ["REG", "REG", "IMM"]
