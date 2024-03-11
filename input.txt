@@ -4,6 +4,6 @@ start: lui t0,100
     bltu t2,t1,start
     addi t2,t1,20
     add t3,t1,t2
-    jal gp,-512
+    jal gp,-512(r1)
     jalr t4,t0,0
 end: beq zero,zero,0

@@ -156,9 +156,12 @@ def J_Type(operands_lst, mnemonicInfo):
 
     InputError_operands(operands_lst,mnemonicInfo)
     
-    # checking if register address is valid or not
+    if operands_lst[-1].count('(')!=0 :
+        operands_lst[-1]=operands_lst[-1][:operands_lst[-1].index('(')]
     
     t=operands_lst[1].replace('-','')
+    
+    # checking if register address is valid or not
     if (operands_lst[0] not in Register_Address) or (t.isnumeric()==False):
         raise AssemblerException("Invalid instruction: wrong operands given")
     
