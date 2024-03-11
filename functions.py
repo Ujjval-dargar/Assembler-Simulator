@@ -197,8 +197,6 @@ def B_Type(operands_lst, mnemonicInfo):
     #Making binary conversion of B-Type instructions
     binline=mnemonicInfo["opcode"]
 
-    # Check if immediate is 12 bits
-    binary(operands_lst[2], 12)
 
     imm = binary(operands_lst[2],13)
 
