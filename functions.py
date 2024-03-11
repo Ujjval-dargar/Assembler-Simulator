@@ -147,7 +147,7 @@ def U_Type( operands_lst, mnemonicInfo):
 
     # We use only upper 20 bits of 32-bit immediate, discarding lower 12 bits
 
-    return bin_imm[32:11:-1] + bin_rd + mnemonicInfo["opcode"]
+    return bin_imm[31:12 - 1:-1] + bin_rd + mnemonicInfo["opcode"]
     
 
 # defining function for J Type instruction
@@ -172,14 +172,14 @@ def J_Type(operands_lst, mnemonicInfo):
     bin_rd = Register_Address[rd]
 
     # Raises error if incorrect immediate
-    # 32-bit immediate +  1 padding bit (sign-extension) = 33 bits
-    # binary() returns MSB at 0-index but we want MSB at 31-index
+    # 20-bit immediate +  1 padding bit (sign-extension) = 21 bits
+    # binary() returns MSB at 0-index but we want MSB at 20-index
 
-    bin_imm = binary(imm, 33)[::-1] 
+    bin_imm = binary(imm, 21)[::-1] 
 
     #returning output line
 
-    return bin_imm[20] + bin_imm[10:0:-1] + bin_imm[11] + bin_imm[19:11:-1] + bin_rd + mnemonicInfo["opcode"]
+    return bin_imm[20] + bin_imm[10:1-1:-1] + bin_imm[11] + bin_imm[19:12 - 1:-1] + bin_rd + mnemonicInfo["opcode"]
 
 #function for B Type instruction
 
