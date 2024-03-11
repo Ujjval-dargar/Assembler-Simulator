@@ -76,7 +76,7 @@ def first_pass():
 
     # Preliminary error handling
     if ( not (halt_found) ):
-        raise AssemblerException("Virtual Halt missing or not used as last instruction")
+        raise AssemblerException("Virtual Halt missing")
 
 # Creating Second pass funciton
 def second_pass():
