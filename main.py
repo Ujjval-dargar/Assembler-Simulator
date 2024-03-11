@@ -61,14 +61,13 @@ def first_pass():
             intermediate_file.write(line+"\n")
 
             # Checking for halt variable
-            halt_found = False
-            
             if line == "beq zero zero 0":
                 halt_found = True
+
                 
 
     # Preliminary error handling
-    if ( not (halt_found and program_counter < 64 * 4) ):
+    if ( not (halt_found) ):
         raise AssemblerException("Virtual Halt missing or not used as last instruction")
 
 # Creating Second pass funciton
