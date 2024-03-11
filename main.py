@@ -45,15 +45,15 @@ def first_pass():
                 if possibleLabel in labels_dict:
                     raise AssemblerException("Invalid instruction: Multiple labels defined")
 
-                # Output: "<operand>, <operand>, ..."
+                # Output: "<opcode> <operand>, <operand>, ..."
                 line = line[colonIndex + 1: ] # Discard label and colon
                 line = line.lstrip() # Get rid of leading whitespace
 
                 # Maintaining Label Dictionary
                 labels_dict[ possibleLabel ] = program_counter
 
-            # Input: "<operand>, <operand>, ..., <operand>"
-            # Output: "<operand> <operand>  ... <operand>"
+            # Input: "<opcode> <operand>, <operand>, ..., <operand>"
+            # Output: "<opcode> <operand> <operand>  ... <operand>"
             line = line.replace(",", " ")
             line = " ".join(line.split())
 
@@ -80,20 +80,21 @@ def second_pass():
     with open("intermediate.txt") as intermediate_file, open("intermediate2.txt", "w") as intermediate2_file:
         
         for line in intermediate_file:
-            line_num+=1
+            line_num+=1 # Increasing line_num counter
 
             if not line.isspace():
                 program_counter+=4 # Each instruction is stored at 4 memory location
 
+            #  Changing label name with appropriate label address
             for iter_label in labels_dict:
                 if iter_label in line:
                     jump = labels_dict[iter_label]-program_counter
                     line = line.replace( iter_label, str( jump ) )
 
+            # Creating intermediate-2 file
             intermediate2_file.write(line)
 
-
-
+# Creating third pass function
 def third_pass():
     global program_counter,line_num,input,output
     program_counter = -4
@@ -102,13 +103,13 @@ def third_pass():
     with open("intermediate2.txt") as intermediate_file2, open(output, "w") as output_file:
 
         for line in intermediate_file2:
-            line_num+=1
+            line_num+=1 # Increasing line_num counter
 
             if not line.isspace():
                 program_counter+=4 # Each instruction is stored at 4 memory location
 
                 # Split only at first space
-                # [ "opcode", "<operand> <operand> ..." ]
+                # Output : [ "opcode", "<operand> <operand> ..." ]
                 tokens = line.split( maxsplit = 1 )
 
                 if len(tokens) < 2:
@@ -131,6 +132,7 @@ def third_pass():
 
                 instructionType = mnemonicInfo[ "type" ]
             
+                # Chaging asssembler code into binary code with proper functions made in functon.py
                 if instructionType == "R":
                     line = R_Type(operands_lst, mnemonicInfo)
 
@@ -149,7 +151,7 @@ def third_pass():
                 elif instructionType == "S":
                     line = S_Type(operands_lst, mnemonicInfo)
 
-                
+                # Writing binary code into output.py
                 output_file.write(line + "\n")
 
 # __main__
