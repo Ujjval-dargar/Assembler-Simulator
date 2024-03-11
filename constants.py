@@ -186,7 +186,7 @@ MNEMONICS_DICT = {
         "opcode" : "0100011",
         "funct3" : "010",
         "funct7" : None,
-        "textSyntax" : ["REG", "REG", "IMM"]
+        "textSyntax" : ["REG", "IMM", "REG"]
     },
 
     #B-TYPE MNEMONICS
