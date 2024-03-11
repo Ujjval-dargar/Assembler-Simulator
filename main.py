@@ -8,31 +8,30 @@ halt_found = False
 program_counter = -4
 line_num=0
 
+# Maintaning command-line arguements 
 input = sys.argv[-2]
 output = sys.argv[-1]
 
+# Creating first pass function
 def first_pass():
     global program_counter,line_num,halt_found,input,output
 
     with open(input, "r") as input_file, open("intermediate.txt", "w") as intermediate_file:
 
         for line in input_file:
-            line_num+=1
-            # Blank line
+            line_num+=1 #increasing line_num counter
+
+            # If not a Blank line increase program counter
             if not line.isspace():
                 program_counter+=4 # Each instruction is stored at 4 memory location
 
             # Removing leading and trailing whitespace
-            # Input: "   <opcode> <operand>, <operand>, ..., <operand>    "
+            # Input: "   <OPCODE> <operand>, <operand>, ..., <operand>    "
             # Output: "<opcode> <operand>, <operand>, ..., <operand>"
             line = line.strip()
             line = line.lower()
 
-
             # Check for labels of following two types (input):
-            # "<label>: <opcode> <operand>, <operand>, ..."
-            # "<label>:<opcode> <operand>, <operand>, ..."
-
             # Convert to function that returns processed label line
             if ":" in line:
                 colonIndex = line.index( ":" )
@@ -50,14 +49,18 @@ def first_pass():
                 line = line[colonIndex + 1: ] # Discard label and colon
                 line = line.lstrip() # Get rid of leading whitespace
 
+                # Maintaining Label Dictionary
                 labels_dict[ possibleLabel ] = program_counter
 
+            # Input: "<opcode> <operand>, <operand>, ..., <operand>"
+            # Output: "<opcode> <operand> <operand>  ... <operand>"
             line = line.replace(",", " ")
             line = " ".join(line.split())
 
 
             intermediate_file.write(line+"\n")
 
+            # Checking for halt variable
             halt_found = False
             
             if line == "beq zero zero 0":
@@ -68,7 +71,7 @@ def first_pass():
     if ( not (halt_found and program_counter < 64 * 4) ):
         raise AssemblerException("Virtual Halt missing or not used as last instruction")
 
-
+# Creating Second pass funciton
 def second_pass():
     global program_counter,line_num,input,output
     line_num=0
@@ -77,20 +80,21 @@ def second_pass():
     with open("intermediate.txt") as intermediate_file, open("intermediate2.txt", "w") as intermediate2_file:
         
         for line in intermediate_file:
-            line_num+=1
+            line_num+=1 # Increasing line_num counter
 
             if not line.isspace():
                 program_counter+=4 # Each instruction is stored at 4 memory location
 
+            #  Changing label name with appropriate label address
             for iter_label in labels_dict:
                 if iter_label in line:
                     jump = labels_dict[iter_label]-program_counter
                     line = line.replace( iter_label, str( jump ) )
 
+            # Creating intermediate-2 file
             intermediate2_file.write(line)
 
-
-
+# Creating third pass function
 def third_pass():
     global program_counter,line_num,input,output
     program_counter = -4
@@ -99,13 +103,13 @@ def third_pass():
     with open("intermediate2.txt") as intermediate_file2, open(output, "w") as output_file:
 
         for line in intermediate_file2:
-            line_num+=1
+            line_num+=1 # Increasing line_num counter
 
             if not line.isspace():
                 program_counter+=4 # Each instruction is stored at 4 memory location
 
                 # Split only at first space
-                # [ "opcode", "<operand> <operand> ..." ]
+                # Output : [ "opcode", "<operand> <operand> ..." ]
                 tokens = line.split( maxsplit = 1 )
 
                 if len(tokens) < 2:
@@ -128,6 +132,7 @@ def third_pass():
 
                 instructionType = mnemonicInfo[ "type" ]
             
+                # Chaging asssembler code into binary code with proper functions made in functon.py
                 if instructionType == "R":
                     line = R_Type(operands_lst, mnemonicInfo)
 
@@ -146,7 +151,7 @@ def third_pass():
                 elif instructionType == "S":
                     line = S_Type(operands_lst, mnemonicInfo)
 
-                
+                # Writing binary code into output.py
                 output_file.write(line + "\n")
 
 # __main__
