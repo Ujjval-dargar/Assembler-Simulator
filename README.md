@@ -2,8 +2,8 @@ The line number reported in the error takes into account blank lines in the inpu
 
 Types of Errors:
 - Label has space in between
-sta   rt: add s1, s2, s3
-start   : add s1, s2, s3
+>sta   rt: add s1, s2, s3
+>start   : add s1, s2, s3
 
 - Multiple labels defined
 start: add s1, s2, s3
