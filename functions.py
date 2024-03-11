@@ -57,7 +57,7 @@ def InputError_operands(operands_lst,mnemonicInfo):
     # checking if number of  operands is equal to no. of required operands
 
     if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
-        raise AssemblerException(f"Instruction takes {len(mnemonicInfo["textSyntax"])} operands but {len(operands_lst)} provided")
+        raise AssemblerException(f"Instruction takes {len(mnemonicInfo['textSyntax'])} operands but {len(operands_lst)} provided")
 
 
 
@@ -172,9 +172,10 @@ def J_Type(operands_lst, mnemonicInfo):
     bin_rd = Register_Address[rd]
 
     # Raises error if incorrect immediate
+    bin_imm = binary(imm, 20)
+
     # 20-bit immediate +  1 padding bit (sign-extension) = 21 bits
     # binary() returns MSB at 0-index but we want MSB at 20-index
-
     bin_imm = binary(imm, 21)[::-1] 
 
     #returning output line
@@ -196,8 +197,11 @@ def B_Type(operands_lst, mnemonicInfo):
     
     
     #Making binary conversion of B-Type instructions
-
     binline=mnemonicInfo["opcode"]
+
+    # Check if immediate is 12 bits
+    binary(operands_lst[2], 12)
+
     imm = binary(operands_lst[2],13)
 
     binline= imm[8:11+1] + imm[1] +binline
