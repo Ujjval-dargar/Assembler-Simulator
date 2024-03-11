@@ -17,7 +17,7 @@ def binary(num, n):
 
     #raising error if the binary representation of number is more than n bits long
     if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):            
-        raise AssemblerException("Invalid Immediate")
+        raise AssemblerException("Invalid immediate: Out of range")
 
 
     # appending leading zeros to the start of the string
@@ -57,7 +57,7 @@ def InputError_operands(operands_lst,mnemonicInfo):
     # checking if number of  operands is equal to no. of required operands
 
     if len(operands_lst) != len(mnemonicInfo["textSyntax"]):
-        raise AssemblerException("Invalid Instruction: Missing operands")
+        raise AssemblerException(f"Instruction takes {len(mnemonicInfo["textSyntax"])} operands but {len(operands_lst)} provided")
 
 
 
@@ -68,7 +68,7 @@ def S_Type( operands_lst, mnemonicInfo):
     # checking for correct input for S_Type  instructions
 
     if operands_lst[-1].count('(')!=1 or operands_lst[-1].count(')')!=1:
-        raise AssemblerException("Invalid operand")
+        raise AssemblerException("Invalid instruction: wrong operands given")
     
     operands_lst[-1]=operands_lst[-1].replace(" ","")
 
@@ -78,19 +78,19 @@ def S_Type( operands_lst, mnemonicInfo):
         flag=True
 
     if (operands_lst[-1][-1]!=')'):
-        raise AssemblerException("Invalid operand")
+        raise AssemblerException("Invalid instruction: wrong operands given")
     
     if flag:
     
         if (operands_lst[-1][-6]!='('):
     
-            raise AssemblerException("Invalid operand")
+            raise AssemblerException("Invalid instruction: wrong operands given")
     
     else:
     
         if (operands_lst[-1][-4]!='('):
     
-            raise AssemblerException("Invalid operand")
+            raise AssemblerException("Invalid instruction: wrong operands given")
     
     #replacing brackets with spaces and spliting the  string into a list of strings
         
@@ -105,7 +105,7 @@ def S_Type( operands_lst, mnemonicInfo):
     t=operands_lst[1].replace('-','')
     
     if (operands_lst[0] not in Register_Address or operands_lst[2] not in Register_Address or t.isnumeric() == False):
-        raise AssemblerException("Invalid operand")
+        raise AssemblerException("Invalid instruction: wrong operands given")
     
     imm = binary(operands_lst[1], 12)
 
@@ -121,8 +121,7 @@ def S_Type( operands_lst, mnemonicInfo):
 
 def U_Type( operands_lst, mnemonicInfo):
 
-    if len(operands_lst) != 2:
-        raise AssemblerException("Invalid Instruction: Incorrect operands")
+    InputError_operands(operands_lst,mnemonicInfo)
     
     # checking if register address is valid or not
 
@@ -136,7 +135,7 @@ def U_Type( operands_lst, mnemonicInfo):
     # Checking for validity
 
     if rd not in Register_Address:
-        raise AssemblerException("Invalid operand")
+        raise AssemblerException("Invalid instruction: wrong operands given")
     
     bin_rd = Register_Address[rd]
 
@@ -155,8 +154,7 @@ def U_Type( operands_lst, mnemonicInfo):
 
 def J_Type(operands_lst, mnemonicInfo):
 
-    if len(operands_lst) != 2:
-        raise AssemblerException("Invalid Instruction: Incorrect operands")
+    InputError_operands(operands_lst,mnemonicInfo)
     
     # checking if register address is valid or not
     
@@ -169,7 +167,7 @@ def J_Type(operands_lst, mnemonicInfo):
     # Checking for validity
 
     if rd not in Register_Address:
-        raise AssemblerException("Invalid operand")
+        raise AssemblerException("Invalid instruction: wrong operands given")
     
     bin_rd = Register_Address[rd]
 
@@ -237,7 +235,7 @@ def I_Type (mnemonic,operands_lst,mnemonicInfo):
         #checking for correct input type
 
         if operands_lst[-1].count('(')!=1 or operands_lst[-1].count(')')!=1:
-            raise AssemblerException("Invalid operand")
+            raise AssemblerException("Invalid instruction: wrong operands given")
     
         operands_lst[-1]=operands_lst[-1].replace(" ","")
         flag=False
@@ -246,17 +244,17 @@ def I_Type (mnemonic,operands_lst,mnemonicInfo):
             flag=True
 
         if (operands_lst[-1][-1]!=')'):
-            raise AssemblerException("Invalid operand")
+            raise AssemblerException("Invalid instruction: wrong operands given")
         
         if flag:
 
             if (operands_lst[-1][-6]!='('):
-                raise AssemblerException("Invalid operand")
+                raise AssemblerException("Invalid instruction: wrong operands given")
         
         else:
 
             if (operands_lst[-1][-4]!='('):
-                raise AssemblerException("Invalid operand")
+                raise AssemblerException("Invalid instruction: wrong operands given")
         
         operands_lst = " ".join(operands_lst).replace(
             "(", " ").replace(")", " ").split()
