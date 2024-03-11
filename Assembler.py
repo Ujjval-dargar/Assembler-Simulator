@@ -41,9 +41,17 @@ def first_pass():
 
                 if possibleLabel.count(" ") != 0:
                     raise AssemblerException("Invalid Instruction: Label has space in between")
+                
+                if possibleLabel.isnumeric():
+                    raise AssemblerException("Invalid Instruction: Label cannot be numeric")
 
                 if possibleLabel in labels_dict:
                     raise AssemblerException("Invalid instruction: Multiple labels defined")
+                
+                if possibleLabel in MNEMONICS_DICT or possibleLabel in Register_Address:
+                    raise AssemblerException("Invalid instruction: Label cannot be register ABI or Mnemonic")
+                
+
 
                 # Output: "<opcode> <operand>, <operand>, ..."
                 line = line[colonIndex + 1: ] # Discard label and colon

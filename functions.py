@@ -50,7 +50,7 @@ def binary(num, n):
 
 
 
-# function for checking correct input  type
+# function for checking correct input type
 
 def InputError_operands(operands_lst,mnemonicInfo):
 
