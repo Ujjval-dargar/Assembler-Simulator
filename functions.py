@@ -174,11 +174,6 @@ def J_Type(operands_lst, mnemonicInfo):
     
     bin_rd = Register_Address[rd]
 
-    # Raises error if incorrect immediate
-    bin_imm = binary(imm, 20)
-
-    # 20-bit immediate +  1 padding bit (sign-extension) = 21 bits
-    # binary() returns MSB at 0-index but we want MSB at 20-index
     bin_imm = binary(imm, 21)[::-1] 
 
     #returning output line
