@@ -3,7 +3,7 @@ from Simulator import *
 
 
 def appendReg():
-    
+
     s = str(program_counter)+' '
 
     for k, v in register_value.items():
@@ -22,6 +22,7 @@ def sext(line, bits):
         line = (bits-len(line))*'1'+line
 
     return line
+
 
 def binary(num, n):
 
@@ -65,6 +66,7 @@ def binary(num, n):
         bin_str = str(bin(bin_str))[2:]
 
     return bin_str
+
 
 def bintodec(line):
 
