@@ -136,16 +136,16 @@ def J_type(line):
     
     # 20th bit of imm is at temp_imm[0] + 19:12 bit of imm is at temp_imm[-8:] + 11 bit of imm at temp_imm[11] + 10:1 bit of imm at temp[1:10]
     imm = temp_imm[0] + temp_imm[12:] + temp_imm[11] + temp_imm[1: 10 + 1] + "0"
-
+    
     reg_name = Address_Register[rd_addr]
-    register_value[reg_name] = program_counter + 4
+    register_value[reg_name] = program_counter[0] + 4
 
-    temp_program_counter = program_counter + bintodec(imm)
+    temp_program_counter = program_counter[0] + bintodec(imm)
 
     bin_pc_str = bin(temp_program_counter)[2:]
     bin_pc_str = bin_pc_str[:-1] + "0"
 
-    program_counter = int(bin_pc_str, 2)
+    program_counter[0] = int(bin_pc_str, 2)
 
 def B_type(line):
     opcode = line[-7:]
