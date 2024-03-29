@@ -83,3 +83,13 @@ register_value = {
     't5': 0,
     't6': 0
 }
+
+data_memory={
+
+}
+def sext(line,bits):
+    if line[0]==0:
+        line=(bits-len(line))*'0'+line
+    else:
+        line=(bits-len(line))*'1'+line
+    return line
