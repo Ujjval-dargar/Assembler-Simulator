@@ -87,9 +87,3 @@ register_value = {
 data_memory={
 
 }
-def sext(line,bits):
-    if line[0]==0:
-        line=(bits-len(line))*'0'+line
-    else:
-        line=(bits-len(line))*'1'+line
-    return line
