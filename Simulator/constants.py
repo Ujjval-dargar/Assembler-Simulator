@@ -84,6 +84,3 @@ register_value = {
     't6': 0
 }
 
-data_memory={
-
-}
