@@ -95,7 +95,7 @@ def S_type(line):
 
 def B_type(line):
     opcode = line[-7:]
-    imm=line[-9:-13:-1]+line[-26:-32:-1]+line[-1]+line[-32]
+    imm=line[0]+line[-8]+line[1:7]+line[-12:-7]
     func3=line[-15:-12]
     rs1=line[-20:-15]
     rs2=line[-25:-20]
