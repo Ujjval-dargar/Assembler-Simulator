@@ -1,16 +1,27 @@
+import os
 from constants import *
 
-def update_PC():
-    program_counter[0]+=1
+class AssemblerException(Exception):
+    pass
 
-def appendReg():
+def appendReg(output_file):
 
-    s = str(program_counter)+' '
+    if firstRun[0]:
+        firstRun[0] = False
+
+        try:
+            os.remove(output_file)
+
+        except FileNotFoundError:
+            pass
+
+
+    s = str(program_counter[0]) + ' '
 
     for k, v in register_value.items():
-        s += str(v)+' '
+        s += str(v) + ' '
 
-    with open("output.txt", 'a') as f:
+    with open(output_file, 'a') as f:
         f.write(s+'\n')
 
 
@@ -94,6 +105,48 @@ def S_type(line):
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
+ 
+def U_type(line): 
+    opcode = line[25 : 31 + 1]
+    rd_addr = line[ 20 : 24 + 1 ]
+    imm = line[0 : 19 + 1] # MSB is at Python Index 0
+
+    reg_name = Address_Register[rd_addr]
+
+    bin_val = imm + 12 * "0"
+    int_val = bintodec(bin_val)
+
+    # lui
+    if (opcode == "0110111"):
+        register_value[reg_name] = int_val
+        return
+
+    # auipc
+    elif (opcode == "0010111"):
+        register_value[reg_name] = program_counter[0] + int_val
+
+
+def J_type(line):
+    opcode = line[25 : 31 + 1]
+    rd_addr = line[ 20 : 24 + 1 ]
+
+    temp_imm = line[0: 19 + 1]
+    # imm[20|10 : 1|11|19 : 12]
+    # index 0, 1 : 10, 11, 12 : 19
+    
+    # 20th bit of imm is at temp_imm[0] + 19:12 bit of imm is at temp_imm[-8:] + 11 bit of imm at temp_imm[11] + 10:1 bit of imm at temp[1:10]
+    imm = temp_imm[0] + temp_imm[12:] + temp_imm[11] + temp_imm[1: 10 + 1] + "0"
+
+    reg_name = Address_Register[rd_addr]
+    register_value[reg_name] = program_counter + 4
+
+    temp_program_counter = program_counter + bintodec(imm)
+
+    bin_pc_str = bin(temp_program_counter)[2:]
+    bin_pc_str = bin_pc_str[:-1] + "0"
+
+    program_counter = int(bin_pc_str, 2)
+
 def B_type(line):
     opcode = line[-7:]
     imm=line[0]+line[-8]+line[1:7]+line[-12:-7]
@@ -101,5 +154,5 @@ def B_type(line):
     rs1=line[-20:-15]
     rs2=line[-25:-20]
     
-B_type("00001100111101101100010001100011")
-appendReg()
+# B_type("00001100111101101100010001100011")
+# appendReg()

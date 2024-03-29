@@ -85,6 +85,7 @@ register_value = {
 }
 
 program_counter = [0]
+firstRun = [True]
 regs = {}
 data_memory = {}
 
