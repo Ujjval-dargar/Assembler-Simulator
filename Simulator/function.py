@@ -43,13 +43,7 @@ def S_type(line):
     imm = line[-12:-7]+line[-32:-25]
 
     s = sext(imm, 32)
+    mem = register_value[Address_Register[rs1]] + bin_dec(sext(imm, 32))
 
-    mem = register_value[Address_Register[rs1]] + sext(imm, 32)
+    data_memory[mem] = register_value[Address_Register[rs2]]
 
-    # data_memory[mem] = register_value[Address_Register[rs2]]
-
-
-ins = "00000010011000010010000000100011"
-# ins="0000 0010 0110 00010 010 00000 0100011"
-print(ins)
-S_type(ins)
