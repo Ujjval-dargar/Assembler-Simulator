@@ -87,5 +87,5 @@ register_value = {
 program_counter = [0]
 firstRun = [True]
 regs = {}
-data_memory = {}
+data_memory = dict.fromkeys( range( 0, 63, 4 ), "0" * 32 )
 

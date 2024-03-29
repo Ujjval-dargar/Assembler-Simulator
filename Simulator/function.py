@@ -25,6 +25,25 @@ def appendReg(output_file):
         f.write(s+'\n')
 
 
+def appendDataMemory(output_file):
+
+    if firstRun[0]:
+        firstRun[0] = False
+
+        try:
+            os.remove(output_file)
+
+        except FileNotFoundError:
+            pass
+
+    memory_keys = list( data_memory.keys() )
+    memory_keys.sort()
+
+    for memory_key in memory_keys:
+        with open(output_file, 'a') as f:
+            f.write( data_memory[memory_key] + "\n" )
+
+
 def sext(line, bits):
 
     if line[0] == '0':
