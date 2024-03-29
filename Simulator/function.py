@@ -94,3 +94,12 @@ def S_type(line):
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
+def B_type(line):
+    opcode = line[-7:]
+    imm=line[0]+line[-8]+line[1:7]+line[-12:-7]
+    func3=line[-15:-12]
+    rs1=line[-20:-15]
+    rs2=line[-25:-20]
+    
+B_type("00001100111101101100010001100011")
+appendReg()
