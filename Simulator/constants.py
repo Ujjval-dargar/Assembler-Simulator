@@ -51,11 +51,11 @@ Address_Register = {
 register_value = {
     'zero': 0,
     'ra': 0,
-    'sp': 10,
+    'sp': 0,
     'gp': 0,
     'tp': 0,
     't0': 0,
-    't1': 100,
+    't1': 0,
     't2': 0,
     's0': 0,
     'fp': 0,
@@ -84,6 +84,3 @@ register_value = {
     't6': 0
 }
 
-data_memory={
-
-}
