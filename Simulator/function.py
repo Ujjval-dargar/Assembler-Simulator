@@ -1,6 +1,7 @@
 from constants import *
-from Simulator import *
 
+def update_PC():
+    program_counter[0]+=1
 
 def appendReg():
 
@@ -93,5 +94,3 @@ def S_type(line):
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
-
-appendReg()

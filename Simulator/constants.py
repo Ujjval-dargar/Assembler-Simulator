@@ -84,3 +84,7 @@ register_value = {
     't6': 0
 }
 
+program_counter = [0]
+regs = {}
+data_memory = {}
+

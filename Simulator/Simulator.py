@@ -1,5 +1,3 @@
 from constants import *
+from function import *
 
-program_counter = 0
-regs = {}
-data_memory = {}
