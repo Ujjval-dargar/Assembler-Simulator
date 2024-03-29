@@ -11,6 +11,48 @@ def sext(line, bits):
 
     return line
 
+def binary(num, n):
+
+    # converting a string number into its binary number
+    bin_str = str(bin(abs(int(num))))[2:] 
+
+
+    # finding the length of the binary number
+    l = len(bin_str)  
+
+
+    #raising error if the binary representation of number is more than n bits long
+    if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):            
+        raise AssemblerException("Invalid immediate: Out of range")
+
+
+    # appending leading zeros to the start of the string
+    if (int(num) >= 0):
+        bin_str = "0" * (n-l) + bin_str
+
+
+    #for negative numbers
+    else:
+
+        bin_str = "0" * (n-l) + bin_str
+
+        #converting binary string into list 
+        bin_str = list(bin_str)
+
+        #calculating  two's complement by flipping all the bits and adding one
+        for i in range(len(bin_str)):
+
+            if (bin_str[i] == '1'):
+                bin_str[i] = '0'
+
+            else:
+                bin_str[i] = '1'
+
+        bin_str = ''.join(bin_str)
+        bin_str = int(bin_str, 2) + int("1", 2)
+        bin_str = str(bin(bin_str))[2:]
+
+    return bin_str
 
 def bintodec(line):
 
