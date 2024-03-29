@@ -46,9 +46,7 @@ Address_Register = {
     '11101':  't4',
     '11110':  't5',
     '11111':  't6'
-
 }
-
 
 register_value = {
     'zero': 0,
