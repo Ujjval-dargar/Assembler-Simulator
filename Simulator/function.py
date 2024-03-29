@@ -1,4 +1,16 @@
 from constants import *
+from Simulator import *
+
+
+def appendReg():
+    
+    s = str(program_counter)+' '
+
+    for k, v in register_value.items():
+        s += str(v)+' '
+
+    with open("output.txt", 'a') as f:
+        f.write(s+'\n')
 
 
 def sext(line, bits):
@@ -37,3 +49,5 @@ def S_type(line):
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
+
+appendReg()
