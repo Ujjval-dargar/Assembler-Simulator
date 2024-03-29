@@ -36,14 +36,14 @@ Register_Address = {
 
 }
 
-MNEMONICS_DICT = { 
+MNEMONICS_DICT = {
 
-    #R-TYPE MNEMONICS
-	"add": {
+    # R-TYPE MNEMONICS
+    "add": {
         "type": "R",
         "funct3": "000",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -51,7 +51,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "000",
         "funct7": "0100000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -59,7 +59,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "001",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -67,16 +67,16 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "010",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
-        
+
     },
 
     "sltu": {
         "type": "R",
         "funct3": "011",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -84,7 +84,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "100",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -92,7 +92,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "101",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -100,7 +100,7 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "110",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
@@ -108,11 +108,11 @@ MNEMONICS_DICT = {
         "type": "R",
         "funct3": "111",
         "funct7": "0000000",
-        "opcode":"0110011",
+        "opcode": "0110011",
         "textSyntax": ["REG", "REG", "REG"]
     },
 
-    #I-TYPE MNEMONICS
+    # I-TYPE MNEMONICS
     "lw": {
         "type": "I",
         "opcode": "0000011",
@@ -145,7 +145,7 @@ MNEMONICS_DICT = {
         "textSyntax": ["REG", "REG", "IMM"]
     },
 
-    #U-TYPE MNEMONICS
+    # U-TYPE MNEMONICS
     "auipc": {
         "type": "U",
         "opcode": "0010111",
@@ -168,7 +168,7 @@ MNEMONICS_DICT = {
 
     },
 
-    #J-TYPE MNEMONICS
+    # J-TYPE MNEMONICS
     "jal": {
         "type": "J",
         "opcode": "1101111",
@@ -180,62 +180,62 @@ MNEMONICS_DICT = {
 
     },
 
-    #S-TYPE MNEMONICS
-    "sw" : {
-        "type" : "S",
-        "opcode" : "0100011",
-        "funct3" : "010",
-        "funct7" : None,
-        "textSyntax" : ["REG", "IMM", "REG"]
+    # S-TYPE MNEMONICS
+    "sw": {
+        "type": "S",
+        "opcode": "0100011",
+        "funct3": "010",
+        "funct7": None,
+        "textSyntax": ["REG", "IMM", "REG"]
     },
 
-    #B-TYPE MNEMONICS
-    "beq" : {
-        "type" : "B" ,
-        "opcode" : "1100011",
-        "funct3" : "000" ,
-        "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM"]
+    # B-TYPE MNEMONICS
+    "beq": {
+        "type": "B",
+        "opcode": "1100011",
+        "funct3": "000",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
     },
 
-    "bne" : {
-        "type" : "B" ,
-        "opcode" : "1100011",
-        "funct3" : "001" ,
-        "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM"]
+    "bne": {
+        "type": "B",
+        "opcode": "1100011",
+        "funct3": "001",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
     },
 
-    "blt" : {
-        "type" : "B" ,
-        "opcode" : "1100011",
-        "funct3" : "100" ,
-        "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM"]
+    "blt": {
+        "type": "B",
+        "opcode": "1100011",
+        "funct3": "100",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
     },
 
-    "bge" : {
-        "type" : "B" ,
-        "opcode" : "1100011",
-        "funct3" : "101" ,
-        "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM"]
+    "bge": {
+        "type": "B",
+        "opcode": "1100011",
+        "funct3": "101",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
     },
 
-    "bltu" : {
-        "type" : "B" ,
-        "opcode" : "1100011",
-        "funct3" : "110" ,
-        "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM"]
+    "bltu": {
+        "type": "B",
+        "opcode": "1100011",
+        "funct3": "110",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
     },
 
-    "bgeu" : {
-        "type" : "B" ,
-        "opcode" : "1100011",
-        "funct3" : "111" ,
-        "funct7" : None ,
-        "textSyntax" : ["REG","REG","IMM"]
+    "bgeu": {
+        "type": "B",
+        "opcode": "1100011",
+        "funct3": "111",
+        "funct7": None,
+        "textSyntax": ["REG", "REG", "IMM"]
     }
 
 }
