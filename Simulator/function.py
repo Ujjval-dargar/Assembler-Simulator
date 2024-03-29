@@ -1,27 +1,4 @@
-from constants import *
-
-def bin_dec(s):
-
-    if s[0] == '0':
-        return int(s, 2)
-    
-    else:
-        # converting binary string into list
-        s = list(s)
-
-        # calculating  two's complement by flipping all the bits and adding one
-        for i in range(len(s)):
-
-            if (s[i] == '1'):
-                s[i] = '0'
-
-            else:
-                s[i] = '1'
-
-        s = ''.join(s)
-        s = int(s, 2) + int("1", 2)
-
-        return -1*s
+from constants import * 
 
 
 def sext(line, bits):
@@ -31,6 +8,11 @@ def sext(line, bits):
         line = (bits-len(line))*'1'+line
     return line
 
+def bintodec(line):
+    dec=int(line[0])*(2**(len(line)-1))*(-1)
+    for i in range(1,len(line)):
+        dec=dec+(int(line[i])*(2**((len(line)-1)-i)))
+    return dec
 
 def S_type(line):
     opcode = line[-7:]
@@ -47,3 +29,8 @@ def S_type(line):
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
+
+ins = "00000010011000010010000000100011"
+# ins="0000 0010 0110 00010 010 00000 0100011"
+print(ins)
+S_type(ins)
