@@ -175,3 +175,71 @@ def B_type(line):
     
 # B_type("00001100111101101100010001100011")
 # appendReg()
+
+def bits(n):
+    lower=n % 100000
+    return int(str(lower),2)
+
+
+def R_TYPE(line):
+
+    line=line[::-1]
+    opcode=line[0:7]
+    rd=line[7:12]
+    funct3=line[12:15]
+    rs1=line[15:20]
+    rs2=line[20:25]
+    funct7=line[25:32]
+    reg_d=Address_Register[rd]
+    reg_s1=Address_Register[rs1] 
+    reg_s2=Address_Register[rs2]
+
+    if (funct3 == "000"):
+
+        if(funct7=="0000000"):
+            # add function
+            register_value[reg_d]=register_value[reg_s1]+register_value[reg_s2]
+            regs[reg_d]=register_value[reg_d]
+        elif(funct7=="0100000"):
+            # sub function
+            register_value[reg_d]=(register_value[reg_s1])-(register_value[reg_s2])
+            regs[reg_d]=register_value[reg_d]
+    
+    elif (funct3 == "001"):
+
+        #sll function
+        reg1_bin=binary(register_value[reg_s1])
+        reg2_bin=binary(register_value[reg_s2])
+        shift_amount = bits(reg2_bin)
+        reg1=str(reg1_bin)
+        reg1=reg1[shift_amount:]+"0"*shift_amount
+        register_value[reg_d]=bintodec(int(reg1))
+        regs[reg_d]=register_value[reg_d]
+
+    elif (funct3=="100"):
+
+        #xor function
+        register_value[reg_d]=register_value[reg_s1]^register_value[reg_s2]
+        regs[reg_d]=register_value[reg_d]
+    
+    elif (funct3=="110"):
+
+        #or function
+        register_value[reg_d]=register_value[reg_s1]|register_value[reg_s2]
+        regs[reg_d]=register_value[reg_d]
+    
+    elif(funct3=="111"):
+
+        #and function
+        register_value[reg_d]=register_value[reg_s1]&register_value[reg_s2]
+        regs[reg_d]=register_value[reg_d]
+    
+    elif (funct3=="101"):
+        #srl function
+        reg1_bin=binary(register_value[reg_s1])
+        reg2_bin=binary(register_value[reg_s2])
+        shift_amount = bits(reg2_bin)
+        reg1=str(reg1_bin)
+        reg1="0"*(shift_amount)+reg1[:-shift_amount]
+        register_value[reg_d]=bintodec(int(reg1))
+        regs[reg_d]=register_value[reg_d]
