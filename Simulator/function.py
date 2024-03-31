@@ -268,3 +268,5 @@ def R_TYPE(line):
         else :
             register_value[reg_d]=0
             regs[reg_d]=register_value[reg_d]
+
+
