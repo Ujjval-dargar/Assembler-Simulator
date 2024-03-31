@@ -235,6 +235,7 @@ def R_TYPE(line):
         regs[reg_d]=register_value[reg_d]
     
     elif (funct3=="101"):
+
         #srl function
         reg1_bin=binary(register_value[reg_s1])
         reg2_bin=binary(register_value[reg_s2])
@@ -243,3 +244,27 @@ def R_TYPE(line):
         reg1="0"*(shift_amount)+reg1[:-shift_amount]
         register_value[reg_d]=bintodec(int(reg1))
         regs[reg_d]=register_value[reg_d]
+    
+    elif (funct3=="010"):
+
+        #slt function
+        if(register_value[reg_s2] > register_value[reg_s1]) :
+            register_value[reg_d]=1
+            regs[reg_d]=register_value[reg_d]
+        else :
+            register_value[reg_d]=0
+            regs[reg_d]=register_value[reg_d]
+
+        
+
+
+    elif (funct3=="011"):
+
+        #sltu function
+
+        if(abs(register_value[reg_s2]) > abs(register_value[reg_s1]) ):
+            register_value[reg_d]=1
+            regs[reg_d]=register_value[reg_d]
+        else :
+            register_value[reg_d]=0
+            regs[reg_d]=register_value[reg_d]
