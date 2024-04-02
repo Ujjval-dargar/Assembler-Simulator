@@ -108,6 +108,8 @@ def bintodec(line):
         dec = dec+(int(line[i])*(2**((len(line)-1)-i)))
     return dec
 
+#completed S_type 
+#TODO Checking
 
 def S_type(line):
     opcode = line[-7:]
@@ -120,11 +122,11 @@ def S_type(line):
     imm = line[-12:-7]+line[-32:-25]
 
     s = sext(imm, 32)
-    mem = register_value[Address_Register[rs1]] + bintodec(sext(imm, 32))
+    mem = bintodec(register_value[Address_Register[rs1]]) + bintodec(sext(imm, 32))
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
- 
+
 def U_type(line): 
     opcode = line[25 : 31 + 1]
     rd_addr = line[ 20 : 24 + 1 ]
