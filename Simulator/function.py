@@ -44,6 +44,17 @@ def binary(num, n):
 
     return bin_str
 
+def bin2hex(bin_str, n = 8):
+    int_val = int(bin_str, 2)
+    hex_val = hex(int_val)[2:]
+
+    while len(hex_val) < 8:
+        hex_val = "0" + hex_val
+
+    return "0x" + hex_val
+
+
+
 def setupDataMem():
     for int_key in range(65536, 65663 + 1, 4):
         bin_key = binary(int_key, 32)
@@ -85,7 +96,12 @@ def appendDataMemory(output_file):
 
     for memory_key in memory_keys:
         with open(output_file, 'a') as f:
-            f.write( '0b' + data_memory[memory_key] + "\n")
+            
+            hex_mem_addr = bin2hex(memory_key)
+            data_val = '0b' + data_memory[memory_key]
+            line = hex_mem_addr + ":" + data_val + "\n"
+
+            f.write( line )
 
 
 def bits(n):
