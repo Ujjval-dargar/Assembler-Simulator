@@ -201,7 +201,7 @@ def I_type(line):
 
     elif funct3 == "000" and opcode == "0010011":
         register_value[reg_d] = binary(
-            bintodec(register_value[reg_s1]) + bintodec(sext(imm, 32)))
+            bintodec(register_value[reg_s1]) + bintodec(sext(imm, 32)), 32)
 
     elif funct3 == "011" and opcode == '0010011':
         if int(reg_s1, 2) < int(imm, 2):
@@ -251,7 +251,7 @@ def B_type(line):
 
 
 # R_TYPE FUNCTION
-def R_TYPE(line):
+def R_type(line):
 
     opcode = line[-7:]
     rd = line[-12:-7]
@@ -281,10 +281,9 @@ def R_TYPE(line):
     elif (funct3 == "001"):
         #sll function
 
-        shift_amount = int(reg_s2_value[-5:])
-        reg_s1_value=reg_s1_value+"0"*shift_amount
-        reg_s1_value=reg_s1_value[shift_amount:]
-        register_value[reg_d]=reg_s1_value
+        shift_amount = int(reg_s2_value[-5:], 2)
+        reg_s1_value = int( reg_s1_value ) << shift_amount
+        register_value[reg_d]= binary( reg_s1_value, 32 )
 
     elif (funct3=="010"):
         #slt function

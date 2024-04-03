@@ -26,12 +26,14 @@ while True:
     opcode = line[-7:]
     instruction_type = Opcode_type[opcode]
 
+    print(line_num)
+
     if instruction_type == "R":
-        # R_type(line)
+        R_type(line)
         program_counter[0] += 4
 
     elif instruction_type == "I":
-        # I_type(line)
+        I_type(line)
         program_counter[0] += 4
     
     elif instruction_type == "S":
