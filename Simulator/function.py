@@ -131,11 +131,11 @@ def S_type(line):
 
 # completed
 
+
 def U_type(line):
-    
-    opcode = line[25 : 31 + 1]
-    rd_addr = line[ 20 : 24 + 1 ]
-    imm = line[0 : 19 + 1] # MSB is at Python Index 0
+    opcode = line[25: 31 + 1]
+    rd_addr = line[20: 24 + 1]
+    imm = line[0: 19 + 1]  # MSB is at Python Index 0
 
     reg_name = Address_Register[rd_addr]
 
@@ -205,7 +205,7 @@ def I_type(line):
 
     elif funct3 == "011" and opcode == '0010011':
         if int(reg_s1, 2) < int(imm, 2):
-            register_value[reg_d] = binary(1,32)
+            register_value[reg_d] = 1
 
     elif funct3 == "000" and opcode == "1100111":
         register_value[reg_d] = program_counter[0]+4
@@ -266,81 +266,61 @@ def R_TYPE(line):
 
     if (funct3 == "000"):
 
-        if(funct7=="0000000"):
-
+        if (funct7 == "0000000"):
             # add function
-            
-            register_value[reg_d]=bintodec(register_value[reg_s1])+bintodec(int(register_value[reg_s2]))
-            regs[reg_d]=binary(register_value[reg_d])
-
-        elif(funct7=="0100000"):
-            
+            register_value[reg_d] = int(
+                register_value[reg_s1])+register_value[reg_s2]
+            regs[reg_d] = register_value[reg_d]
+        elif (funct7 == "0100000"):
             # sub function
-            
-            register_value[reg_d]=bintodec(register_value[reg_s1])-bintodec(register_value[reg_s2])
-            regs[reg_d]=binary(register_value[reg_d])
-    
+            register_value[reg_d] = (
+                register_value[reg_s1])-(register_value[reg_s2])
+            regs[reg_d] = register_value[reg_d]
+
     elif (funct3 == "001"):
 
-        #sll function
-
-        
-        shift_amount = bits(int(reg_s2))
-        
-        reg_s1=reg_s1[shift_amount:]+"0"*shift_amount
-        
-        regs[reg_d]=reg_s1
+        # sll function
+        reg1_bin = binary(register_value[reg_s1])
+        reg2_bin = binary(register_value[reg_s2])
+        shift_amount = bits(reg2_bin)
+        reg1 = str(reg1_bin)
+        reg1 = reg1[shift_amount:]+"0"*shift_amount
+        register_value[reg_d] = bintodec(int(reg1))
+        regs[reg_d] = register_value[reg_d]
 
     elif (funct3 == "100"):
 
-        #xor function
-        register_value[reg_d]=(bintodec(register_value[reg_s1]))^(bintodec(register_value[reg_s2]))
-        regs[reg_d]=(register_value[reg_d])
-    
-    elif (funct3=="110"):
+        # xor function
+        register_value[reg_d] = register_value[reg_s1] ^ register_value[reg_s2]
+        regs[reg_d] = register_value[reg_d]
 
-        #or function
-        register_value[reg_d]=(bintodec(register_value[reg_s1]))|(bintodec(register_value[reg_s2]))
-        regs[reg_d]=register_value[reg_d]
-    
-    elif(funct3=="111"):
+    elif (funct3 == "110"):
 
-        #and function
-        register_value[reg_d]=(bintodec(register_value[reg_s1]))&(bintodec(register_value[reg_s2]))
-        regs[reg_d]=register_value[reg_d]
-    
-    elif (funct3=="101"):
+        # or function
+        register_value[reg_d] = register_value[reg_s1] | register_value[reg_s2]
+        regs[reg_d] = register_value[reg_d]
 
-        #srl function
-        
-        shift_amount = bits(int(reg_s2))
-        
-        reg_s1="0"*(shift_amount)+reg_s1[:-shift_amount]
-        
-        regs[reg_d]=reg_s1
-    
-    elif (funct3=="010"):
+    elif (funct3 == "111"):
 
-        #slt function
+        # and function
+        register_value[reg_d] = register_value[reg_s1] & register_value[reg_s2]
+        regs[reg_d] = register_value[reg_d]
 
-        if(bintodec(register_value[reg_s2]) > bintodec(register_value[reg_s1])) :
-            register_value[reg_d]=binary(1,32)
-            regs[reg_d]=register_value[reg_d]
-        else :
-            register_value[reg_d]=0
-            regs[reg_d]=register_value[reg_d]
+    elif (funct3 == "101"):
 
-        
-    elif (funct3=="011"):
+        # srl function
+        reg1_bin = binary(register_value[reg_s1])
+        reg2_bin = binary(register_value[reg_s2])
+        shift_amount = bits(reg2_bin)
+        reg1 = str(reg1_bin)
+        reg1 = "0"*(shift_amount)+reg1[:-shift_amount]
+        register_value[reg_d] = bintodec(int(reg1))
+        regs[reg_d] = register_value[reg_d]
 
-        #sltu function
+    elif (funct3 == "010"):
+        pass
 
-        if(int(register_value[reg_s2]) > int(register_value[reg_s1]) ):
-            register_value[reg_d]=1
-            regs[reg_d]=register_value[reg_d]
-        else :
-            register_value[reg_d]=0
-            regs[reg_d]=register_value[reg_d]
+    elif (funct3 == "011"):
 
         # sltu function
 
@@ -350,4 +330,3 @@ def R_TYPE(line):
         else:
             register_value[reg_d] = 0
             regs[reg_d] = register_value[reg_d]
-
