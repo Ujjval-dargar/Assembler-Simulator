@@ -5,7 +5,8 @@ from constants import *
 class AssemblerException(Exception):
     pass
 
-def binary(num, n = 32):
+
+def binary(num, n=32):
 
     # converting a string number into its binary number
     bin_str = str(bin(abs(int(num))))[2:]
@@ -44,7 +45,8 @@ def binary(num, n = 32):
 
     return bin_str
 
-def bin2hex(bin_str, n = 8):
+
+def bin2hex(bin_str, n=8):
     int_val = int(bin_str, 2)
     hex_val = hex(int_val)[2:]
 
@@ -54,11 +56,11 @@ def bin2hex(bin_str, n = 8):
     return "0x" + hex_val
 
 
-
 def setupDataMem():
     for int_key in range(65536, 65663 + 1, 4):
         bin_key = binary(int_key, 32)
         data_memory[bin_key] = "0" * 32
+
 
 def appendReg(output_file):
 
@@ -71,7 +73,7 @@ def appendReg(output_file):
         except FileNotFoundError:
             pass
 
-    s = '0b' + binary( program_counter[0], 32) + ' '
+    s = '0b' + binary(program_counter[0], 32) + ' '
 
     for k, v in register_value.items():
         s += '0b' + str(v) + ' '
@@ -101,7 +103,7 @@ def appendDataMemory(output_file):
             data_val = '0b' + data_memory[memory_key]
             line = hex_mem_addr + ":" + data_val + "\n"
 
-            f.write( line )
+            f.write(line)
 
 
 def bits(n):
@@ -118,6 +120,7 @@ def sext(line, bits):
         line = (bits-len(line))*'1'+line
 
     return line
+
 
 def bintodec(line):
 
@@ -145,7 +148,8 @@ def S_type(line):
     imm = line[-32:-25]+line[-12:-7]
 
     s = sext(imm, 32)
-    mem = binary( bintodec(register_value[Address_Register[rs1]]) + bintodec(sext(imm, 32)), 32 )
+    mem = binary(
+        bintodec(register_value[Address_Register[rs1]]) + bintodec(sext(imm, 32)), 32)
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
@@ -225,7 +229,8 @@ def I_type(line):
     elif funct3 == "000" and opcode == "1100111":
         register_value[reg_d] = binary(program_counter[0]+4)
 
-        temp_program_counter = bintodec(register_value[reg_s1])+bintodec(sext(imm, 32))
+        temp_program_counter = bintodec(
+            register_value[reg_s1])+bintodec(sext(imm, 32))
         bin_pc_str = bin(temp_program_counter)[2:]
         bin_pc_str = bin_pc_str[:-1] + "0"
 
@@ -250,8 +255,8 @@ def B_type(line):
 
     rs1_signed_value = bintodec(rs1)
     rs2_signed_value = bintodec(rs2)
-    rs1_unsigned_value = int(rs1,2)
-    rs2_unsigned_value = int(rs2,2)
+    rs1_unsigned_value = int(rs1, 2)
+    rs2_unsigned_value = int(rs2, 2)
 
     imm_val = bintodec(imm)
 
@@ -287,59 +292,59 @@ def R_type(line):
     reg_d = Address_Register[rd]
     reg_s1 = Address_Register[rs1]
     reg_s2 = Address_Register[rs2]
-    reg_s1_value=register_value[reg_s1]
-    reg_s2_value=register_value[reg_s2]
-
+    reg_s1_value = register_value[reg_s1]
+    reg_s2_value = register_value[reg_s2]
 
     if (funct3 == "000"):
-        if(funct7=="0000000"):
+        if (funct7 == "0000000"):
             # add function
 
-            reg_val=bintodec(reg_s1_value)+bintodec(reg_s2_value)
-            register_value[reg_d]=binary(reg_val,32)
+            reg_val = bintodec(reg_s1_value)+bintodec(reg_s2_value)
+            register_value[reg_d] = binary(reg_val, 32)
 
-        elif(funct7=="0100000"):
+        elif (funct7 == "0100000"):
             # sub function
 
-            reg_val=bintodec(reg_s1_value)-bintodec(reg_s2_value)
-            register_value[reg_d]=binary(reg_val,32)
-    
+            reg_val = bintodec(reg_s1_value)-bintodec(reg_s2_value)
+            register_value[reg_d] = binary(reg_val, 32)
+
     elif (funct3 == "001"):
-        #sll function
+        # sll function
 
         shift_amount = int(reg_s2_value[-5:], 2)
-        reg_s1_value = int( reg_s1_value ) << shift_amount
-        register_value[reg_d]= binary( reg_s1_value, 32 )
+        reg_s1_value = int(reg_s1_value, 2) << shift_amount
+        register_value[reg_d] = binary(reg_s1_value, 32)
 
-    elif (funct3=="010"):
-        #slt function
+    elif (funct3 == "010"):
+        # slt function
 
-        if (bintodec(reg_s2_value) > bintodec(reg_s1_value)) :
-            register_value[reg_d]=binary(1,32)
+        if (bintodec(reg_s2_value) > bintodec(reg_s1_value)):
+            register_value[reg_d] = binary(1, 32)
 
-    elif (funct3=="011"):
-        #sltu function
+    elif (funct3 == "011"):
+        # sltu function
 
-        if(int(reg_s2_value) > int(reg_s1_value)):
-            register_value[reg_d]=binary(1,32)
+        if (int(reg_s2_value, 2) > int(reg_s1_value, 2)):
+            register_value[reg_d] = binary(1, 32)
 
     elif (funct3 == "100"):
-        #xor function
-        register_value[reg_d]=binary(bintodec(reg_s1_value))^(bintodec(reg_s2_value),32)
-    
-    elif (funct3=="101"):
-        #srl function
+        # xor function
+        register_value[reg_d] = binary(
+            bintodec(reg_s1_value) ^ (bintodec(reg_s2_value), 32))
+
+    elif (funct3 == "101"):
+        # srl function
 
         shift_amount = int(reg_s2_value[-5:], 2)
-        reg_s1_value = shift_amount >> int(reg_s1_value)
+        reg_s1_value = shift_amount >> int(reg_s1_value, 2)
         register_value[reg_d] = binary(reg_s1_value, 32)
-    
-    elif (funct3=="110"):
-        #or function
-        register_value[reg_d]=binary(bintodec(reg_s1_value))|(bintodec(reg_s2_value),32)
-    
-    elif(funct3=="111"):
-        #and function
+
+    elif (funct3 == "110"):
+        # or function
+        register_value[reg_d] = binary(
+            bintodec(reg_s1_value) | (bintodec(reg_s2_value), 32))
+
+    elif (funct3 == "111"):
+        # and function
         val = bintodec(reg_s1_value) & bintodec(reg_s2_value)
-        register_value[reg_d]=binary( val, 32 )
-    
+        register_value[reg_d] = binary(val, 32)
