@@ -134,17 +134,18 @@ def U_type(line):
 
     reg_name = Address_Register[rd_addr]
 
-    bin_val = imm + 12 * "0"
-    int_val = bintodec(bin_val)
+    bin_val = imm + 12 * "0" # binary imm
+    int_val = bintodec(bin_val) # integer imm
 
     # lui
     if (opcode == "0110111"):
-        register_value[reg_name] = int_val
+        register_value[reg_name] = bin_val
         return
 
     # auipc
     elif (opcode == "0010111"):
-        register_value[reg_name] = program_counter[0] + int_val
+        int_val2 = program_counter[0] + int_val
+        register_value[reg_name] = binary(int_val2, 32)
 
 
 def J_type(line):
