@@ -187,12 +187,12 @@ def bits(n):
 def R_TYPE(line):
 
     line=line[::-1]
-    opcode=line[0:7]
-    rd=line[7:12]
-    funct3=line[12:15]
-    rs1=line[15:20]
-    rs2=line[20:25]
-    funct7=line[25:32]
+    opcode=line[0:7][::-1]
+    rd=line[7:12][::-1]
+    funct3=line[12:15][::-1]
+    rs1=line[15:20][::-1]
+    rs2=line[20:25][::-1]
+    funct7=line[25:32][::-1]
     reg_d=Address_Register[rd]
     reg_s1=Address_Register[rs1] 
     reg_s2=Address_Register[rs2]
@@ -201,7 +201,7 @@ def R_TYPE(line):
 
         if(funct7=="0000000"):
             # add function
-            register_value[reg_d]=register_value[reg_s1]+register_value[reg_s2]
+            register_value[reg_d]=int(register_value[reg_s1]+register_value[reg_s2]
             regs[reg_d]=register_value[reg_d]
         elif(funct7=="0100000"):
             # sub function
