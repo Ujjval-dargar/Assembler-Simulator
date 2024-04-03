@@ -69,7 +69,7 @@ while True:
     register_value["zero"] = "0" * 32
 
     # Write registers to file
-    instrution_count += 1
+    # instrution_count += 1
     appendReg(output)
 
 # Write data memory to file
