@@ -64,20 +64,16 @@ def binary(num, n):
     # converting a string number into its binary number
     bin_str = str(bin(abs(int(num))))[2:] 
 
-
     # finding the length of the binary number
     l = len(bin_str)  
-
 
     #raising error if the binary representation of number is more than n bits long
     if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):            
         raise AssemblerException("Invalid immediate: Out of range")
 
-
     # appending leading zeros to the start of the string
     if (int(num) >= 0):
         bin_str = "0" * (n-l) + bin_str
-
 
     #for negative numbers
     else:
