@@ -44,6 +44,10 @@ def appendDataMemory(output_file):
             f.write( data_memory[memory_key] + "\n" )
 
 
+def bits(n):
+    lower=n % 100000
+    return int(str(lower),2)
+
 def sext(line, bits):
 
     if line[0] == '0':
@@ -111,6 +115,7 @@ def bintodec(line):
 #completed S_type 
 #TODO Checking
 
+#S_TYPE FUNCTION
 def S_type(line):
     opcode = line[-7:]
 
@@ -126,7 +131,7 @@ def S_type(line):
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 
-
+#U_TYPE FUNCTION
 def U_type(line): 
     opcode = line[25 : 31 + 1]
     rd_addr = line[ 20 : 24 + 1 ]
@@ -148,6 +153,7 @@ def U_type(line):
         register_value[reg_name] = binary(int_val2, 32)
 
 
+#J_TYPE FUNCTION
 def J_type(line):
     opcode = line[25 : 31 + 1]
     rd_addr = line[ 20 : 24 + 1 ]
@@ -169,21 +175,41 @@ def J_type(line):
 
     program_counter[0] = int(bin_pc_str, 2)
 
+#B_TYPE FUNCTION
 def B_type(line):
     opcode = line[-7:]
     imm=line[0]+line[-8]+line[1:7]+line[-12:-7]+'0'
     func3=line[-15:-12]
     rs1=line[-20:-15]
     rs2=line[-25:-20]
+    rs1_signed_value=bintodec(rs1)
+    rs2_signed_value=bintodec(rs2)
+    rs1_unsigned_value=int(rs1)
+    rs2_unsigned_value=int(rs2)
+
+    imm_val=bintodec(imm)
+
+    if (func3=="000"):
+        if (rs1_signed_value==rs2_signed_value):
+            program_counter[0]+=imm_val
+    if (func3=="001"):
+        if (rs1_signed_value!=rs2_signed_value):
+            program_counter[0]+=imm_val
+    if (func3=="100"):
+        if (rs1_signed_value<rs2_signed_value):
+            program_counter[0]+=imm_val
+    if (func3=="101"):
+        if (rs1_signed_value>=rs2_signed_value):
+            program_counter[0]+=imm_val
+    if (func3=="110"):
+        if (rs1_unsigned_value<rs2_unsigned_value):
+            program_counter[0]+=imm_val
+    if (func3=="111"):
+        if (rs1_unsigned_value>=rs2_unsigned_value):
+            program_counter[0]+=imm_val
     
-# B_type("00001100111101101100010001100011")
-# appendReg()
 
-def bits(n):
-    lower=n % 100000
-    return int(str(lower),2)
-
-
+#R_TYPE FUNCTION
 def R_TYPE(line):
 
     line=line[::-1]
@@ -201,7 +227,7 @@ def R_TYPE(line):
 
         if(funct7=="0000000"):
             # add function
-            register_value[reg_d]=int(register_value[reg_s1]+register_value[reg_s2]
+            register_value[reg_d]=int(register_value[reg_s1])+register_value[reg_s2]
             regs[reg_d]=register_value[reg_d]
         elif(funct7=="0100000"):
             # sub function
@@ -259,8 +285,6 @@ def R_TYPE(line):
             regs[reg_d]=register_value[reg_d]
 
         
-
-
     elif (funct3=="011"):
 
         #sltu function
@@ -271,5 +295,4 @@ def R_TYPE(line):
         else :
             register_value[reg_d]=0
             regs[reg_d]=register_value[reg_d]
-
 
