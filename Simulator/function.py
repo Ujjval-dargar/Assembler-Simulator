@@ -133,11 +133,19 @@ def S_type(line):
 
 # completed
 
+<<<<<<< Updated upstream
 
 def U_type(line):
     opcode = line[25: 31 + 1]
     rd_addr = line[20: 24 + 1]
     imm = line[0: 19 + 1]  # MSB is at Python Index 0
+=======
+def U_type(line):
+    
+    opcode = line[25 : 31 + 1]
+    rd_addr = line[ 20 : 24 + 1 ]
+    imm = line[0 : 19 + 1] # MSB is at Python Index 0
+>>>>>>> Stashed changes
 
     reg_name = Address_Register[rd_addr]
 
@@ -268,6 +276,7 @@ def R_TYPE(line):
 
     if (funct3 == "000"):
 
+<<<<<<< Updated upstream
         if (funct7 == "0000000"):
             # add function
             register_value[reg_d] = int(
@@ -289,9 +298,36 @@ def R_TYPE(line):
         reg1 = reg1[shift_amount:]+"0"*shift_amount
         register_value[reg_d] = bintodec(int(reg1))
         regs[reg_d] = register_value[reg_d]
+=======
+        if(funct7=="0000000"):
+
+            # add function
+            
+            register_value[reg_d]=bintodec(register_value[reg_s1])+bintodec(int(register_value[reg_s2]))
+            regs[reg_d]=binary(register_value[reg_d])
+
+        elif(funct7=="0100000"):
+            
+            # sub function
+            
+            register_value[reg_d]=bintodec(register_value[reg_s1])-bintodec(register_value[reg_s2])
+            regs[reg_d]=binary(register_value[reg_d])
+    
+    elif (funct3 == "001"):
+
+        #sll function
+
+        
+        shift_amount = bits(int(reg_s2))
+        
+        reg_s1=reg_s1[shift_amount:]+"0"*shift_amount
+        
+        regs[reg_d]=reg_s1
+>>>>>>> Stashed changes
 
     elif (funct3 == "100"):
 
+<<<<<<< Updated upstream
         # xor function
         register_value[reg_d] = register_value[reg_s1] ^ register_value[reg_s2]
         regs[reg_d] = register_value[reg_d]
@@ -323,6 +359,58 @@ def R_TYPE(line):
         pass
 
     elif (funct3 == "011"):
+=======
+        #xor function
+        register_value[reg_d]=(bintodec(register_value[reg_s1]))^(bintodec(register_value[reg_s2]))
+        regs[reg_d]=(register_value[reg_d])
+    
+    elif (funct3=="110"):
+
+        #or function
+        register_value[reg_d]=(bintodec(register_value[reg_s1]))|(bintodec(register_value[reg_s2]))
+        regs[reg_d]=register_value[reg_d]
+    
+    elif(funct3=="111"):
+
+        #and function
+        register_value[reg_d]=(bintodec(register_value[reg_s1]))&(bintodec(register_value[reg_s2]))
+        regs[reg_d]=register_value[reg_d]
+    
+    elif (funct3=="101"):
+
+        #srl function
+        
+        shift_amount = bits(int(reg_s2))
+        
+        reg_s1="0"*(shift_amount)+reg_s1[:-shift_amount]
+        
+        regs[reg_d]=reg_s1
+    
+    elif (funct3=="010"):
+
+        #slt function
+
+        if(bintodec(register_value[reg_s2]) > bintodec(register_value[reg_s1])) :
+            register_value[reg_d]=binary(1,32)
+            regs[reg_d]=register_value[reg_d]
+        else :
+            register_value[reg_d]=0
+            regs[reg_d]=register_value[reg_d]
+
+        
+
+
+    elif (funct3=="011"):
+
+        #sltu function
+
+        if(int(register_value[reg_s2]) > int(register_value[reg_s1]) ):
+            register_value[reg_d]=1
+            regs[reg_d]=register_value[reg_d]
+        else :
+            register_value[reg_d]=0
+            regs[reg_d]=register_value[reg_d]
+>>>>>>> Stashed changes
 
         # sltu function
 
