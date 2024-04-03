@@ -199,11 +199,6 @@ def J_type(line):
     program_counter[0] = int(bin_pc_str, 2)
 
 
-def bits(n):
-    lower = n % 100000
-    return int(str(lower), 2)
-
-
 def I_type(line):
     line = line[::-1]
     opcode = line[0:7][::-1]
