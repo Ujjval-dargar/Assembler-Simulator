@@ -46,8 +46,9 @@ def appendDataMemory(output_file):
 
 
 def bits(n):
-    lower=n % 100000
-    return int(str(lower),2)
+    lower = n % 100000
+    return int(str(lower), 2)
+
 
 def sext(line, bits):
 
@@ -63,20 +64,20 @@ def sext(line, bits):
 def binary(num, n):
 
     # converting a string number into its binary number
-    bin_str = str(bin(abs(int(num))))[2:] 
+    bin_str = str(bin(abs(int(num))))[2:]
 
     # finding the length of the binary number
     l = len(bin_str)
 
-    #raising error if the binary representation of number is more than n bits long
-    if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):            
+    # raising error if the binary representation of number is more than n bits long
+    if (l > n or int(num) > 2**(n-1)-1 or int(num) < -2**(n-1)):
         raise AssemblerException("Invalid immediate: Out of range")
 
     # appending leading zeros to the start of the string
     if (int(num) >= 0):
         bin_str = "0" * (n-l) + bin_str
 
-    #for negative numbers
+    # for negative numbers
     else:
 
         bin_str = "0" * (n-l) + bin_str
@@ -113,7 +114,7 @@ def bintodec(line):
 # TODO Checking
 
 
-#S_TYPE FUNCTION
+# S_TYPE FUNCTION
 def S_type(line):
     opcode = line[-7:]
 
@@ -156,7 +157,7 @@ def U_type(line):
 # completed
 
 
-#J_TYPE FUNCTION
+# J_TYPE FUNCTION
 def J_type(line):
     opcode = line[25: 31 + 1]
     rd_addr = line[20: 24 + 1]
@@ -178,6 +179,7 @@ def J_type(line):
     bin_pc_str = bin_pc_str[:-1] + "0"
 
     program_counter[0] = int(bin_pc_str, 2)
+
 
 def bits(n):
     lower = n % 100000
@@ -214,61 +216,64 @@ def I_type(line):
         program_counter[0][-1] = '0'
         program_counter[0] = bintodec(program_counter[0])
 
-#B_TYPE FUNCTION
+# B_TYPE FUNCTION
+
+
 def B_type(line):
     opcode = line[-7:]
-    imm=line[0]+line[-8]+line[1:7]+line[-12:-7]+'0'
-    func3=line[-15:-12]
-    rs1=line[-20:-15]
-    rs2=line[-25:-20]
-    rs1_signed_value=bintodec(rs1)
-    rs2_signed_value=bintodec(rs2)
-    rs1_unsigned_value=int(rs1)
-    rs2_unsigned_value=int(rs2)
+    imm = line[0]+line[-8]+line[1:7]+line[-12:-7]+'0'
+    func3 = line[-15:-12]
+    rs1 = line[-20:-15]
+    rs2 = line[-25:-20]
+    rs1_signed_value = bintodec(rs1)
+    rs2_signed_value = bintodec(rs2)
+    rs1_unsigned_value = int(rs1)
+    rs2_unsigned_value = int(rs2)
 
-    imm_val=bintodec(imm)
+    imm_val = bintodec(imm)
 
-    if (func3=="000"):
-        if (rs1_signed_value==rs2_signed_value):
-            program_counter[0]+=imm_val
-    elif (func3=="001"):
-        if (rs1_signed_value!=rs2_signed_value):
-            program_counter[0]+=imm_val
-    elif (func3=="100"):
-        if (rs1_signed_value<rs2_signed_value):
-            program_counter[0]+=imm_val
-    elif (func3=="101"):
-        if (rs1_signed_value>=rs2_signed_value):
-            program_counter[0]+=imm_val
-    elif (func3=="110"):
-        if (rs1_unsigned_value<rs2_unsigned_value):
-            program_counter[0]+=imm_val
-    elif (func3=="111"):
-        if (rs1_unsigned_value>=rs2_unsigned_value):
-            program_counter[0]+=imm_val
-    
+    if (func3 == "000"):
+        if (rs1_signed_value == rs2_signed_value):
+            program_counter[0] += imm_val
+    elif (func3 == "001"):
+        if (rs1_signed_value != rs2_signed_value):
+            program_counter[0] += imm_val
+    elif (func3 == "100"):
+        if (rs1_signed_value < rs2_signed_value):
+            program_counter[0] += imm_val
+    elif (func3 == "101"):
+        if (rs1_signed_value >= rs2_signed_value):
+            program_counter[0] += imm_val
+    elif (func3 == "110"):
+        if (rs1_unsigned_value < rs2_unsigned_value):
+            program_counter[0] += imm_val
+    elif (func3 == "111"):
+        if (rs1_unsigned_value >= rs2_unsigned_value):
+            program_counter[0] += imm_val
 
-#R_TYPE FUNCTION
+
+# R_TYPE FUNCTION
 def R_TYPE(line):
 
-    line=line[::-1]
-    opcode=line[0:7][::-1]
-    rd=line[7:12][::-1]
-    funct3=line[12:15][::-1]
-    rs1=line[15:20][::-1]
-    rs2=line[20:25][::-1]
-    funct7=line[25:32][::-1]
-    reg_d=Address_Register[rd]
-    reg_s1=Address_Register[rs1] 
-    reg_s2=Address_Register[rs2]
+    line = line[::-1]
+    opcode = line[0:7][::-1]
+    rd = line[7:12][::-1]
+    funct3 = line[12:15][::-1]
+    rs1 = line[15:20][::-1]
+    rs2 = line[20:25][::-1]
+    funct7 = line[25:32][::-1]
+    reg_d = Address_Register[rd]
+    reg_s1 = Address_Register[rs1]
+    reg_s2 = Address_Register[rs2]
 
     if (funct3 == "000"):
 
         if (funct7 == "0000000"):
             # add function
-            register_value[reg_d]=int(register_value[reg_s1])+register_value[reg_s2]
-            regs[reg_d]=register_value[reg_d]
-        elif(funct7=="0100000"):
+            register_value[reg_d] = int(
+                register_value[reg_s1])+register_value[reg_s2]
+            regs[reg_d] = register_value[reg_d]
+        elif (funct7 == "0100000"):
             # sub function
             register_value[reg_d] = (
                 register_value[reg_s1])-(register_value[reg_s2])
@@ -316,15 +321,14 @@ def R_TYPE(line):
 
     elif (funct3 == "010"):
         pass
-        
-    elif (funct3=="011"):
 
-        #sltu function
+    elif (funct3 == "011"):
 
-        if(abs(register_value[reg_s2]) > abs(register_value[reg_s1]) ):
-            register_value[reg_d]=1
-            regs[reg_d]=register_value[reg_d]
-        else :
-            register_value[reg_d]=0
-            regs[reg_d]=register_value[reg_d]
+        # sltu function
 
+        if (abs(register_value[reg_s2]) > abs(register_value[reg_s1])):
+            register_value[reg_d] = 1
+            regs[reg_d] = register_value[reg_d]
+        else:
+            register_value[reg_d] = 0
+            regs[reg_d] = register_value[reg_d]
