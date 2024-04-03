@@ -134,6 +134,7 @@ def bintodec(line):
 
 # S_TYPE FUNCTION
 def S_type(line):
+
     opcode = line[-7:]
 
     funct3 = line[-15:-12]
@@ -141,7 +142,7 @@ def S_type(line):
     rs1 = line[-20:-15]
     rs2 = line[-25:-20]
 
-    imm = line[-12:-7]+line[-32:-25]
+    imm = line[-32:-25]+line[-12:-7]
 
     s = sext(imm, 32)
     mem = binary( bintodec(register_value[Address_Register[rs1]]) + bintodec(sext(imm, 32)), 32 )
@@ -321,33 +322,11 @@ def R_type(line):
         if (bintodec(reg_s2_value) > bintodec(reg_s1_value)) :
             register_value[reg_d]=binary(1,32)
 
-        # else :
-        #     register_value[reg_d]=0
-
-            #        CONFIRM KRNA H
-            #regs[reg_d]=register_value[reg_d]
-
-
     elif (funct3=="011"):
         #sltu function
 
         if(int(reg_s2_value) > int(reg_s1_value)):
             register_value[reg_d]=binary(1,32)
-        
-        #           CONFIRM KRNA H
-        # else :
-        #     register_value[reg_d]=0
-        #     regs[reg_d]=register_value[reg_d]
-
-        #               ASK PURPOSE FROM PRANAY : 
-        # # sltu function
-
-        # if (abs(register_value[reg_s2]) > abs(register_value[reg_s1])):
-        #     register_value[reg_d] = 1
-        #     regs[reg_d] = register_value[reg_d]
-        # else:
-        #     register_value[reg_d] = 0
-        #     regs[reg_d] = register_value[reg_d]
 
     elif (funct3 == "100"):
         #xor function
@@ -357,7 +336,7 @@ def R_type(line):
         #srl function
 
         shift_amount = int(reg_s2_value[-5:], 2)
-        reg_s1_value = int(reg_s1_value) >> shift_amount
+        reg_s1_value = shift_amount >> int(reg_s1_value)
         register_value[reg_d] = binary(reg_s1_value, 32)
     
     elif (funct3=="110"):
