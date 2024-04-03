@@ -255,101 +255,90 @@ def B_type(line):
 # R_TYPE FUNCTION
 def R_TYPE(line):
 
-    line = line[::-1]
-    opcode = line[0:7][::-1]
-    rd = line[7:12][::-1]
-    funct3 = line[12:15][::-1]
-    rs1 = line[15:20][::-1]
-    rs2 = line[20:25][::-1]
-    funct7 = line[25:32][::-1]
+    opcode = line[-7:]
+    rd = line[-12:-7]
+    funct3 = line[-15:-12]
+    rs1 = line[-20:-15]
+    rs2 = line[-25:-20]
+    funct7 = line[-32:-25]
     reg_d = Address_Register[rd]
     reg_s1 = Address_Register[rs1]
     reg_s2 = Address_Register[rs2]
+    reg_s1_value=register_value[reg_s1]
+    reg_s2_value=register_value[reg_s2]
 
     if (funct3 == "000"):
-
         if(funct7=="0000000"):
-
             # add function
-            
-            register_value[reg_d]=bintodec(register_value[reg_s1])+bintodec(int(register_value[reg_s2]))
-            regs[reg_d]=binary(register_value[reg_d])
+
+            reg_val=bintodec(reg_s1_value)+bintodec(reg_s2_value)
+            register_value[reg_d]=binary(reg_val,32)
 
         elif(funct7=="0100000"):
-            
             # sub function
-            
-            register_value[reg_d]=bintodec(register_value[reg_s1])-bintodec(register_value[reg_s2])
-            regs[reg_d]=binary(register_value[reg_d])
+
+            reg_val=bintodec(reg_s1_value)-bintodec(reg_s2_value)
+            register_value[reg_d]=binary(reg_val,32)
     
     elif (funct3 == "001"):
-
         #sll function
 
-        
-        shift_amount = bits(int(reg_s2))
-        
-        reg_s1=reg_s1[shift_amount:]+"0"*shift_amount
-        
-        regs[reg_d]=reg_s1
+        shift_amount = int(reg_s2_value[-5:])
+        reg_s1_value=reg_s1_value+"0"*shift_amount
+        reg_s1_value=reg_s1_value[shift_amount:]
+        register_value[reg_d]=reg_s1_value
 
-    elif (funct3 == "100"):
-
-        #xor function
-        register_value[reg_d]=(bintodec(register_value[reg_s1]))^(bintodec(register_value[reg_s2]))
-        regs[reg_d]=(register_value[reg_d])
-    
-    elif (funct3=="110"):
-
-        #or function
-        register_value[reg_d]=(bintodec(register_value[reg_s1]))|(bintodec(register_value[reg_s2]))
-        regs[reg_d]=register_value[reg_d]
-    
-    elif(funct3=="111"):
-
-        #and function
-        register_value[reg_d]=(bintodec(register_value[reg_s1]))&(bintodec(register_value[reg_s2]))
-        regs[reg_d]=register_value[reg_d]
-    
-    elif (funct3=="101"):
-
-        #srl function
-        
-        shift_amount = bits(int(reg_s2))
-        
-        reg_s1="0"*(shift_amount)+reg_s1[:-shift_amount]
-        
-        regs[reg_d]=reg_s1
-    
     elif (funct3=="010"):
-
         #slt function
 
-        if(bintodec(register_value[reg_s2]) > bintodec(register_value[reg_s1])) :
+        if (bintodec(reg_s2_value) > bintodec(reg_s1_value)) :
             register_value[reg_d]=binary(1,32)
-            regs[reg_d]=register_value[reg_d]
-        else :
-            register_value[reg_d]=0
-            regs[reg_d]=register_value[reg_d]
 
-        
+        # else :
+        #     register_value[reg_d]=0
+
+            #        CONFIRM KRNA H
+            #regs[reg_d]=register_value[reg_d]
+
+
     elif (funct3=="011"):
-
         #sltu function
 
-        if(int(register_value[reg_s2]) > int(register_value[reg_s1]) ):
-            register_value[reg_d]=1
-            regs[reg_d]=register_value[reg_d]
-        else :
-            register_value[reg_d]=0
-            regs[reg_d]=register_value[reg_d]
+        if(int(reg_s2_value) > int(reg_s1_value)):
+            register_value[reg_d]=binary(1,32)
+        
+        #           CONFIRM KRNA H
+        # else :
+        #     register_value[reg_d]=0
+        #     regs[reg_d]=register_value[reg_d]
 
-        # sltu function
+        #               ASK PURPOSE FROM PRANAY : 
+        # # sltu function
 
-        if (abs(register_value[reg_s2]) > abs(register_value[reg_s1])):
-            register_value[reg_d] = 1
-            regs[reg_d] = register_value[reg_d]
-        else:
-            register_value[reg_d] = 0
-            regs[reg_d] = register_value[reg_d]
+        # if (abs(register_value[reg_s2]) > abs(register_value[reg_s1])):
+        #     register_value[reg_d] = 1
+        #     regs[reg_d] = register_value[reg_d]
+        # else:
+        #     register_value[reg_d] = 0
+        #     regs[reg_d] = register_value[reg_d]
 
+    elif (funct3 == "100"):
+        #xor function
+        register_value[reg_d]=binary(bintodec(reg_s1_value))^(bintodec(reg_s2_value),32)
+    
+    elif (funct3=="101"):
+        #srl function
+
+        shift_amount = int(reg_s2_value[-5:])
+        reg_s1_value = "0"*shift_amount + reg_s1_value
+        reg_s1_value=reg_s1_value[:-shift_amount]
+        register_value[reg_d]=reg_s1_value
+    
+    elif (funct3=="110"):
+        #or function
+        register_value[reg_d]=binary(bintodec(reg_s1_value))|(bintodec(reg_s2_value),32)
+    
+    elif(funct3=="111"):
+        #and function
+        register_value[reg_d]=binary(bintodec(reg_s1_value))&(bintodec(reg_s2_value),32)
+    
