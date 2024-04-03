@@ -5,7 +5,7 @@ from constants import *
 class AssemblerException(Exception):
     pass
 
-def binary(num, n):
+def binary(num, n = 32):
 
     # converting a string number into its binary number
     bin_str = str(bin(abs(int(num))))[2:]
@@ -96,7 +96,7 @@ def appendDataMemory(output_file):
 
     for memory_key in memory_keys:
         with open(output_file, 'a') as f:
-            
+
             hex_mem_addr = bin2hex(memory_key)
             data_val = '0b' + data_memory[memory_key]
             line = hex_mem_addr + ":" + data_val + "\n"
@@ -227,21 +227,31 @@ def I_type(line):
             register_value[reg_d] = 1
 
     elif funct3 == "000" and opcode == "1100111":
-        register_value[reg_d] = program_counter[0]+4
-        program_counter[0] = binary(
-            bintodec(register_value[reg_s1])+bintodec(sext(imm, 32)))
-        program_counter[0][-1] = '0'
-        program_counter[0] = bintodec(program_counter[0])
+        register_value[reg_d] = binary(program_counter[0]+4)
+
+        temp_program_counter = bintodec(register_value[reg_s1])+bintodec(sext(imm, 32))
+        bin_pc_str = bin(temp_program_counter)[2:]
+        bin_pc_str = bin_pc_str[:-1] + "0"
+
+        program_counter[0] = int(bin_pc_str, 2)
 
 # B_TYPE FUNCTION
 
 
 def B_type(line):
     opcode = line[-7:]
-    imm = line[0]+line[-8]+line[1:7]+line[-12:-7]+'0'
+    imm = line[0]+line[-8]+line[1:7]+line[-12:-8]+'0'
     func3 = line[-15:-12]
-    rs1 = line[-20:-15]
-    rs2 = line[-25:-20]
+
+    rs1_addr = line[-20:-15]
+    rs2_addr = line[-25:-20]
+
+    rs1_name = Address_Register[rs1_addr]
+    rs2_name = Address_Register[rs2_addr]
+
+    rs1 = register_value[rs1_name]
+    rs2 = register_value[rs2_name]
+
     rs1_signed_value = bintodec(rs1)
     rs2_signed_value = bintodec(rs2)
     rs1_unsigned_value = int(rs1)
@@ -283,6 +293,7 @@ def R_type(line):
     reg_s2 = Address_Register[rs2]
     reg_s1_value=register_value[reg_s1]
     reg_s2_value=register_value[reg_s2]
+
 
     if (funct3 == "000"):
         if(funct7=="0000000"):
