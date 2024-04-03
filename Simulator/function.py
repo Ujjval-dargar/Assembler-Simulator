@@ -5,62 +5,6 @@ from constants import *
 class AssemblerException(Exception):
     pass
 
-
-def appendReg(output_file):
-
-    if firstRun[0]:
-        firstRun[0] = False
-
-        try:
-            os.remove(output_file)
-
-        except FileNotFoundError:
-            pass
-
-    s = str(program_counter[0]) + ' '
-
-    for k, v in register_value.items():
-        s += str(v) + ' '
-
-    with open(output_file, 'a') as f:
-        f.write(s+'\n')
-
-
-def appendDataMemory(output_file):
-
-    if firstRun[0]:
-        firstRun[0] = False
-
-        try:
-            os.remove(output_file)
-
-        except FileNotFoundError:
-            pass
-
-    memory_keys = list(data_memory.keys())
-    memory_keys.sort()
-
-    for memory_key in memory_keys:
-        with open(output_file, 'a') as f:
-            f.write(data_memory[memory_key] + "\n")
-
-
-def bits(n):
-    lower = n % 100000
-    return int(str(lower), 2)
-
-
-def sext(line, bits):
-
-    if line[0] == '0':
-        line = (bits-len(line))*'0'+line
-
-    else:
-        line = (bits-len(line))*'1'+line
-
-    return line
-
-
 def binary(num, n):
 
     # converting a string number into its binary number
@@ -100,6 +44,60 @@ def binary(num, n):
 
     return bin_str
 
+
+def appendReg(output_file):
+
+    if firstRun[0]:
+        firstRun[0] = False
+
+        try:
+            os.remove(output_file)
+
+        except FileNotFoundError:
+            pass
+
+    s = '0b' + str(program_counter[0]) + ' '
+
+    for k, v in register_value.items():
+        s += '0b' + str(v) + ' '
+
+    with open(output_file, 'a') as f:
+        f.write(s+'\n')
+
+
+def appendDataMemory(output_file):
+
+    if firstRun[0]:
+        firstRun[0] = False
+
+        try:
+            os.remove(output_file)
+
+        except FileNotFoundError:
+            pass
+
+    memory_keys = list(data_memory.keys())
+    memory_keys.sort()
+
+    for memory_key in memory_keys:
+        with open(output_file, 'a') as f:
+            f.write( '0b' + data_memory[memory_key] + "\n")
+
+
+def bits(n):
+    lower = n % 100000
+    return int(str(lower), 2)
+
+
+def sext(line, bits):
+
+    if line[0] == '0':
+        line = (bits-len(line))*'0'+line
+
+    else:
+        line = (bits-len(line))*'1'+line
+
+    return line
 
 def bintodec(line):
 
