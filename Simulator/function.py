@@ -330,7 +330,7 @@ def R_type(line):
     elif (funct3 == "100"):
         # xor function
         register_value[reg_d] = binary(
-            bintodec(reg_s1_value) ^ (bintodec(reg_s2_value), 32))
+            bintodec(reg_s1_value) ^ (bintodec(reg_s2_value)),32)
 
     elif (funct3 == "101"):
         # srl function
@@ -342,7 +342,7 @@ def R_type(line):
     elif (funct3 == "110"):
         # or function
         register_value[reg_d] = binary(
-            bintodec(reg_s1_value) | (bintodec(reg_s2_value), 32))
+            bintodec(reg_s1_value) | (bintodec(reg_s2_value)),32)
 
     elif (funct3 == "111"):
         # and function
