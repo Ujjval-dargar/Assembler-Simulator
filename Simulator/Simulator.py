@@ -5,6 +5,8 @@ from function import *
 input = sys.argv[-2]
 output = sys.argv[-1]
 
+setupDataMem()
+
 with open(input) as input_file:
     input_lines = input_file.readlines()
 

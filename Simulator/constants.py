@@ -85,7 +85,6 @@ register_value = {
     't6': "00000000000000000000000000000000"
 }
 
-program_counter = [0] # INteger
+program_counter = [0] # Integer
 firstRun = [True]
-regs = {}
-data_memory = dict.fromkeys(range(0, 63, 4), "0" * 32)
+data_memory = {}

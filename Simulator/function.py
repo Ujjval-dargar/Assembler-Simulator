@@ -44,6 +44,10 @@ def binary(num, n):
 
     return bin_str
 
+def setupDataMem():
+    for int_key in range(65536, 65663 + 1, 4):
+        bin_key = binary(int_key, 32)
+        data_memory[bin_key] = "0" * 32
 
 def appendReg(output_file):
 
@@ -337,5 +341,6 @@ def R_type(line):
     
     elif(funct3=="111"):
         #and function
-        register_value[reg_d]=binary(bintodec(reg_s1_value))&(bintodec(reg_s2_value),32)
+        val = bintodec(reg_s1_value) & bintodec(reg_s2_value)
+        register_value[reg_d]=binary( val, 32 )
     
