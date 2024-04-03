@@ -207,7 +207,7 @@ def I_type(line):
 
     elif funct3 == "011" and opcode == '0010011':
         if int(reg_s1, 2) < int(imm, 2):
-            register_value[reg_d] = 1
+            register_value[reg_d] = binary(1,32)
 
     elif funct3 == "000" and opcode == "1100111":
         register_value[reg_d] = program_counter[0]+4
