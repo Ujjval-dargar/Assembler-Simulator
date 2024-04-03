@@ -48,6 +48,7 @@ Address_Register = {
     '11111':  't6'
 }
 
+# Binary strings
 register_value = {
     'zero': "00000000000000000000000000000000",
     'ra': "00000000000000000000000000000000",
@@ -84,7 +85,7 @@ register_value = {
     't6': "00000000000000000000000000000000"
 }
 
-program_counter = [0]
+program_counter = [0] # INteger
 firstRun = [True]
 regs = {}
 data_memory = dict.fromkeys(range(0, 63, 4), "0" * 32)

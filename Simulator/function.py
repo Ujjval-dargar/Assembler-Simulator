@@ -160,7 +160,7 @@ def J_type(line):
     imm = temp_imm[0] + temp_imm[12:] + temp_imm[11] + temp_imm[1: 10 + 1] + "0"
     
     reg_name = Address_Register[rd_addr]
-    register_value[reg_name] = program_counter[0] + 4
+    register_value[reg_name] = binary(program_counter[0] + 4, 32)
 
     temp_program_counter = program_counter[0] + bintodec(imm)
 
