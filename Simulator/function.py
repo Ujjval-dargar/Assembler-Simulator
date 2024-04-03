@@ -254,8 +254,8 @@ def B_type(line):
 
     rs1_signed_value = bintodec(rs1)
     rs2_signed_value = bintodec(rs2)
-    rs1_unsigned_value = int(rs1)
-    rs2_unsigned_value = int(rs2)
+    rs1_unsigned_value = int(rs1,2)
+    rs2_unsigned_value = int(rs2,2)
 
     imm_val = bintodec(imm)
 
