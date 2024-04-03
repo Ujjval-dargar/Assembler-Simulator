@@ -188,19 +188,19 @@ def B_type(line):
     if (func3=="000"):
         if (rs1_signed_value==rs2_signed_value):
             program_counter[0]+=imm_val
-    if (func3=="001"):
+    elif (func3=="001"):
         if (rs1_signed_value!=rs2_signed_value):
             program_counter[0]+=imm_val
-    if (func3=="100"):
+    elif (func3=="100"):
         if (rs1_signed_value<rs2_signed_value):
             program_counter[0]+=imm_val
-    if (func3=="101"):
+    elif (func3=="101"):
         if (rs1_signed_value>=rs2_signed_value):
             program_counter[0]+=imm_val
-    if (func3=="110"):
+    elif (func3=="110"):
         if (rs1_unsigned_value<rs2_unsigned_value):
             program_counter[0]+=imm_val
-    if (func3=="111"):
+    elif (func3=="111"):
         if (rs1_unsigned_value>=rs2_unsigned_value):
             program_counter[0]+=imm_val
     
