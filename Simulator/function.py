@@ -60,7 +60,7 @@ def appendReg(output_file):
         except FileNotFoundError:
             pass
 
-    s = '0b' + str(program_counter[0]) + ' '
+    s = '0b' + binary( program_counter[0], 32) + ' '
 
     for k, v in register_value.items():
         s += '0b' + str(v) + ' '
@@ -128,8 +128,7 @@ def S_type(line):
     imm = line[-12:-7]+line[-32:-25]
 
     s = sext(imm, 32)
-    mem = bintodec(
-        register_value[Address_Register[rs1]]) + bintodec(sext(imm, 32))
+    mem = binary( bintodec(register_value[Address_Register[rs1]]) + bintodec(sext(imm, 32)), 32 )
 
     data_memory[mem] = register_value[Address_Register[rs2]]
 

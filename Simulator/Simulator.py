@@ -20,9 +20,7 @@ while True:
 
     # Virtual Halt
     if line == "00000000000000000000000001100011":
-        program_counter[0] += 4
         appendReg(output)
-
         break
 
     opcode = line[-7:]
@@ -43,7 +41,13 @@ while True:
         program_counter[0] += 4
 
     elif instruction_type == "B":
+
+        prev_program_counter = program_counter[0]
         B_type(line)
+
+        # No condition was true
+        if prev_program_counter == program_counter[0]:
+            program_counter[0] += 4
 
     elif instruction_type == "U":
         U_type(line)
