@@ -55,7 +55,6 @@ while True:
         # No condition was true
         if prev_program_counter == program_counter[0]:
             program_counter[0] += 4
-            continue # don't append values to reg if no branching happened
 
     elif instruction_type == "U":
         U_type(line)
