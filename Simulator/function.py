@@ -216,7 +216,7 @@ def I_type(line):
             bintodec(register_value[reg_s1]) + bintodec(sext(imm, 32)), 32)
 
     elif funct3 == "011" and opcode == '0010011':
-        if int(reg_s1, 2) < int(imm, 2):
+        if int(register_value[reg_s1], 2) < int(imm, 2):
             register_value[reg_d] = binary(1,32)
 
     elif funct3 == "000" and opcode == "1100111":
@@ -230,7 +230,6 @@ def I_type(line):
         program_counter[0] = int(bin_pc_str, 2)
 
 # B_TYPE FUNCTION
-
 
 def B_type(line):
     opcode = line[-7:]
