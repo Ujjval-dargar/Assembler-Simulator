@@ -131,9 +131,6 @@ def bintodec(line):
         dec = dec+(int(line[i])*(2**((len(line)-1)-i)))
     return dec
 
-# completed S_type
-# TODO Checking
-
 
 # S_TYPE FUNCTION
 def S_type(line):
@@ -152,8 +149,6 @@ def S_type(line):
         bintodec(register_value[Address_Register[rs1]]) + bintodec(sext(imm, 32)), 32)
 
     data_memory[mem] = register_value[Address_Register[rs2]]
-
-# completed
 
 
 def U_type(line):
@@ -175,8 +170,6 @@ def U_type(line):
     elif (opcode == "0010111"):
         int_val2 = program_counter[0] + int_val
         register_value[reg_name] = binary(int_val2, 32)
-
-# completed
 
 
 # J_TYPE FUNCTION
@@ -336,7 +329,7 @@ def R_type(line):
         # srl function
 
         shift_amount = int(reg_s2_value[-5:], 2)
-        reg_s1_value = shift_amount >> int(reg_s1_value, 2)
+        reg_s1_value = int(reg_s1_value, 2) >> shift_amount 
         register_value[reg_d] = binary(reg_s1_value, 32)
 
     elif (funct3 == "110"):
