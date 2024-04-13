@@ -42,7 +42,7 @@ while True:
 
         if not (funct3 == "000" and opcode == "1100111"):
             program_counter[0] += 4
-    
+
     elif instruction_type == "S":
         S_type(line)
         program_counter[0] += 4
@@ -63,7 +63,12 @@ while True:
     elif instruction_type == "J":
         J_type(line)
 
-    
+    elif instruction_type == "bonus":
+        ans = bonus_type(line)
+        if ans:
+            break
+        program_counter[0] += 4
+
     # Reset zero-reg
     register_value["zero"] = "0" * 32
 

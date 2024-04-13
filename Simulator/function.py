@@ -132,7 +132,15 @@ def bintodec(line):
     return dec
 
 
+def reset_register():
+    for k in register_value:
+        register_value[k] = "0"*32
+
+    register_value["sp"] = "00000000000000000000000100000000"
+
 # S_TYPE FUNCTION
+
+
 def S_type(line):
 
     opcode = line[-7:]
@@ -217,7 +225,7 @@ def I_type(line):
 
     elif funct3 == "011" and opcode == '0010011':
         if int(register_value[reg_s1], 2) < int(imm, 2):
-            register_value[reg_d] = binary(1,32)
+            register_value[reg_d] = binary(1, 32)
 
     elif funct3 == "000" and opcode == "1100111":
         register_value[reg_d] = binary(program_counter[0]+4)
@@ -230,6 +238,7 @@ def I_type(line):
         program_counter[0] = int(bin_pc_str, 2)
 
 # B_TYPE FUNCTION
+
 
 def B_type(line):
     opcode = line[-7:]
@@ -322,21 +331,58 @@ def R_type(line):
     elif (funct3 == "100"):
         # xor function
         register_value[reg_d] = binary(
-            bintodec(reg_s1_value) ^ (bintodec(reg_s2_value)),32)
+            bintodec(reg_s1_value) ^ (bintodec(reg_s2_value)), 32)
 
     elif (funct3 == "101"):
         # srl function
 
         shift_amount = int(reg_s2_value[-5:], 2)
-        reg_s1_value = int(reg_s1_value, 2) >> shift_amount 
+        reg_s1_value = int(reg_s1_value, 2) >> shift_amount
         register_value[reg_d] = binary(reg_s1_value, 32)
 
     elif (funct3 == "110"):
         # or function
         register_value[reg_d] = binary(
-            bintodec(reg_s1_value) | (bintodec(reg_s2_value)),32)
+            bintodec(reg_s1_value) | (bintodec(reg_s2_value)), 32)
 
     elif (funct3 == "111"):
         # and function
         val = bintodec(reg_s1_value) & bintodec(reg_s2_value)
         register_value[reg_d] = binary(val, 32)
+
+
+def bonus_type(line):
+    opcode = line[-7:]
+    rd = line[-12:-7]
+    funct3 = line[-15:-12]
+    rs1 = line[-20:-15]
+    rs2 = line[-25:-20]
+    funct7 = line[-32:-25]
+
+    reg_d = Address_Register[rd]
+    reg_s1 = Address_Register[rs1]
+    reg_s2 = Address_Register[rs2]
+    reg_s1_value = register_value[reg_s1]
+    reg_s2_value = register_value[reg_s2]
+
+    if funct3 == '101':
+        int_rs1 = bintodec(reg_s1_value)
+        int_rs2 = bintodec(reg_s2_value)
+
+        result = binary(int_rs1*int_rs2)
+
+        if len(result) > 32:
+            result = result[-32::]
+
+        register_value[reg_d] = result
+
+    elif funct3 == '111':
+        reset_register()
+
+    elif funct3 == '000':
+        return True
+
+    elif funct3 == '010':
+        register_value[reg_d] = reg_s1_value[::-1]
+
+    return False
