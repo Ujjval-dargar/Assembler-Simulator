@@ -352,6 +352,7 @@ def R_type(line):
 
 
 def bonus_type(line):
+    
     opcode = line[-7:]
     rd = line[-12:-7]
     funct3 = line[-15:-12]
