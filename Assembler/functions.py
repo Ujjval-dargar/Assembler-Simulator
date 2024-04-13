@@ -285,4 +285,23 @@ def I_Type (mnemonic,operands_lst,mnemonicInfo):
     return bin_line
 
 
+def bonus_Type(operands_lst, mnemonicInfo):
+    InputError_operands(operands_lst, mnemonicInfo)
 
+    for i in operands_lst:
+
+        if (i not in Register_Address):
+            raise AssemblerException ("Invalid instruction: invalid register name given")
+    
+    # returning output line 
+
+    if (len(operands_lst) == 0):
+        bin_line = (mnemonicInfo["funct7"] + "00000" + "00000" + mnemonicInfo["funct3"] + "00000" + mnemonicInfo["opcode"])
+    
+    elif (len(operands_lst) == 2):
+        bin_line = (mnemonicInfo["funct7"] + "00000" + Register_Address[operands_lst[1]] + mnemonicInfo["funct3"] + Register_Address[operands_lst[0]] + mnemonicInfo["opcode"])
+    
+    else :
+        bin_line = (mnemonicInfo["funct7"] + Register_Address[operands_lst[2]] + Register_Address[operands_lst[1]] + mnemonicInfo["funct3"] + Register_Address[operands_lst[0]] + mnemonicInfo["opcode"])
+
+    return bin_line 

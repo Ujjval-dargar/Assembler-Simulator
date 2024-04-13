@@ -120,10 +120,16 @@ def third_pass():
                 tokens = line.split( maxsplit = 1 )
 
                 if len(tokens) < 2:
-                    raise AssemblerException("Invalid instruction: Missing opcode or no space between opcode and operands")
+                    if (tokens[0] == "rst" or tokens[0] == "halt"):
+                        mnemonic = tokens[0]
+                        operands_str=""
 
-                mnemonic = tokens[0]
-                operands_str = tokens[1]
+                    else :
+                        raise AssemblerException("Invalid instruction: Missing opcode or no space between opcode and operands")
+
+                else :
+                    mnemonic = tokens[0]
+                    operands_str = tokens[1]
 
                 if '(' in operands_str:
                     operands_lst=operands_str.split(maxsplit=1)
@@ -157,6 +163,9 @@ def third_pass():
 
                 elif instructionType == "S":
                     line = S_Type(operands_lst, mnemonicInfo)
+                
+                elif instructionType == "bonus":
+                    line = bonus_Type(operands_lst, mnemonicInfo)
 
                 # Writing binary code into output.py
                 output_file.write(line + "\n")

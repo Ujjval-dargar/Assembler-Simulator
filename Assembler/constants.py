@@ -236,6 +236,40 @@ MNEMONICS_DICT = {
         "funct3": "111",
         "funct7": None,
         "textSyntax": ["REG", "REG", "IMM"]
-    }
+    },
+
+    # bonus
+    "mul": {
+        "type": 'bonus',
+        "opcode": "0101010",
+        "funct3": "101",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG", "IMM"]
+    },
+
+    "rst": {
+        "type": 'bonus',
+        "opcode": "0101010",
+        "funct3": "111",
+        "funct7": "0000000",
+        "textSyntax": []
+    },
+
+    "halt": {
+        "type": 'bonus',
+        "opcode": "0101010",
+        "funct3": "000",
+        "funct7": "0000000",
+        "textSyntax": []
+    },
+
+    "rvrs": {
+        "type": 'bonus',
+        "opcode": "0101010",
+        "funct3": "010",
+        "funct7": "0000000",
+        "textSyntax": ["REG", "REG"]
+    },
+
 
 }
