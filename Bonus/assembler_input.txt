@@ -1,0 +1,7 @@
+addi t1 zero 2
+addi t2 zero 4
+mul t0 t1 t2
+rvrs t6 t0
+rst
+halt
+beq zero zero 0
