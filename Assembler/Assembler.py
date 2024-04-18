@@ -1,6 +1,6 @@
 import os
-from constants import *
-from functions import *
+from assembler_constants import *
+from assembler_functions import *
 import sys
 
 labels_dict = {}

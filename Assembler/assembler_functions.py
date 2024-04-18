@@ -1,4 +1,4 @@
-from constants import *
+from assembler_constants import *
 
 class AssemblerException(Exception):
     pass

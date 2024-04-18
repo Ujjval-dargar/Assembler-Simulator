@@ -1,5 +1,5 @@
 import os
-from constants import *
+from simulator_constants import *
 
 
 class AssemblerException(Exception):

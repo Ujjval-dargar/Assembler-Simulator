@@ -1,6 +1,6 @@
 import sys
-from constants import *
-from function import *
+from simulator_constants import *
+from simulator_functions import *
 
 input = sys.argv[-2]
 output = sys.argv[-1]
