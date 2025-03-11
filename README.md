@@ -1,7 +1,6 @@
 # RISC-V Assembler & Simulator
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 
 A robust command-line tool built in Python that assembles RISC-V assembly code into machine code and simulates its execution. Perfect for learning and debugging RISC-V programs.
 
